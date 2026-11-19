@@ -799,3 +799,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 @media (max-width: 760px){ .hero-stats{ margin-left: calc(var(--edge) * -1); margin-right: calc(var(--edge) * -1); } }
 .flag-text h2{ font-size: clamp(1.6rem,2.8vw,2.4rem); letter-spacing:-.02em; }
 .theme-whizzle .result-card{ background:#4A39E0; }   /* white text on the lighter overlay was 2.8:1; now ≥ 7:1 */
+/* case pages: always-visible contact button in the sticky bar */
+.case-nav .nav-cta{ background:var(--volt); color:#fff !important; padding:9px 16px; letter-spacing:.05em; }
+.case-nav .nav-cta:hover{ background:var(--ink); color:#fff !important; }
+.case-nav-right{ flex-direction:row-reverse; }
+@media (max-width:560px){ .case-nav .brand{ display:none; } .case-nav .back{ font-size:11.5px; } .case-nav-right{ gap:10px; } .case-nav{ padding:12px var(--edge); } }
+.theme-whizzle .case-nav .nav-cta, .theme-siroko .case-nav .nav-cta{ background:#fff; color:#1F2236 !important; }
+.theme-whizzle .case-nav .nav-cta:hover, .theme-siroko .case-nav .nav-cta:hover{ background:#1F2236; color:#fff !important; }
