@@ -1,4 +1,16 @@
 document.documentElement.classList.remove('no-js');
+const ES = document.documentElement.lang === 'es';
+const TXT = ES ? {
+  notConnected: 'El formulario aún no está conectado: escríbeme por ahora a dsgndm@gmail.com.',
+  sending: 'Enviando…', sendingMsg: 'Enviando tu mensaje…', sent: 'Enviado', thanks: 'Gracias, tu mensaje está en camino. Te responderé por email en breve.',
+  send: 'Enviar mensaje', fallback: 'No se pudo enviar directamente: abriendo tu cliente de correo.', visitor: 'un visitante', subject: 'Contacto desde el portfolio de',
+  replyTo: 'Responder a'
+} : {
+  notConnected: 'Form not connected yet — email dsgndm@gmail.com directly for now.',
+  sending: 'Sending…', sendingMsg: 'Sending your message…', sent: 'Sent', thanks: "Thanks — your message is on its way. I'll reply by email soon.",
+  send: 'Send message', fallback: 'Could not send directly — opening your email client instead.', visitor: 'a visitor', subject: 'Portfolio contact from',
+  replyTo: 'Reply to'
+};
 
 /* Graceful fallback if a placeholder image fails to load */
 window.addEventListener('load', () => {
@@ -130,6 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
       railToggle.setAttribute('aria-expanded', 'true');
       railFlyout.classList.add('open');
       railFlyout.setAttribute('aria-hidden', 'false');
+      railFlyout.removeAttribute('inert');
       if (window.gsap && !reduceMotion) {
         gsap.fromTo(links, { opacity: 0, x: -8 }, {
           opacity: 1, x: 0, duration: 0.4, stagger: 0.05, ease: 'power2.out', delay: 0.08
@@ -145,6 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
       railToggle.setAttribute('aria-expanded', 'false');
       railFlyout.classList.remove('open');
       railFlyout.setAttribute('aria-hidden', 'true');
+      railFlyout.setAttribute('inert', '');
       if (window.gsap) gsap.set(links, { opacity: 0, x: -8 });
     };
 
@@ -223,13 +237,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const accessKey = contactForm.access_key.value.trim();
       if (!accessKey || accessKey === 'PASTE_YOUR_WEB3FORMS_ACCESS_KEY_HERE') {
-        if (status) status.textContent = 'Form not connected yet — email dsgndm@gmail.com directly for now.';
+        if (status) status.textContent = TXT.notConnected;
         return;
       }
 
       submitBtn.disabled = true;
-      if (submitLabel) submitLabel.textContent = 'Sending…';
-      if (status) status.textContent = 'Sending your message…';
+      if (submitLabel) submitLabel.textContent = TXT.sending;
+      if (status) status.textContent = TXT.sendingMsg;
 
       try {
         const res = await fetch('https://api.web3forms.com/submit', {
@@ -240,11 +254,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const result = await res.json();
 
         if (result.success) {
-          if (submitLabel) submitLabel.textContent = 'Sent';
-          if (status) status.textContent = 'Thanks — your message is on its way. I\'ll reply by email soon.';
+          if (submitLabel) submitLabel.textContent = TXT.sent;
+          if (status) status.textContent = TXT.thanks;
           contactForm.reset();
           setTimeout(() => {
-            if (submitLabel) submitLabel.textContent = 'Send message';
+            if (submitLabel) submitLabel.textContent = TXT.send;
             submitBtn.disabled = false;
             if (status) status.textContent = defaultStatus;
           }, 4000);
@@ -253,15 +267,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } catch (err) {
         // graceful fallback: hand off to the visitor's own email client
-        if (submitLabel) submitLabel.textContent = 'Send message';
+        if (submitLabel) submitLabel.textContent = TXT.send;
         submitBtn.disabled = false;
         const email = contactForm.dataset.reveal.split('').reverse().join('');
         const name = contactForm.name.value.trim();
         const replyTo = contactForm.email.value.trim();
         const message = contactForm.message.value.trim();
-        const subject = encodeURIComponent(`Portfolio contact from ${name || 'a visitor'}`);
-        const body = encodeURIComponent(`${message}\n\n— ${name}\nReply to: ${replyTo}`);
-        if (status) status.textContent = 'Could not send directly — opening your email client instead.';
+        const subject = encodeURIComponent(`${TXT.subject} ${name || TXT.visitor}`);
+        const body = encodeURIComponent(`${message}\n\n— ${name}\n${TXT.replyTo}: ${replyTo}`);
+        if (status) status.textContent = TXT.fallback;
         window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
       }
     });

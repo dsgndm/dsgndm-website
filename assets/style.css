@@ -3,6 +3,11 @@
    Design system: tokens, layout, components
    ============================================================ */
 
+/* self-hosted fonts (same files as the archviz sister site) */
+@font-face{font-family:"Archivo";src:url("fonts/archivo-wdth.woff2") format("woff2");font-weight:100 900;font-stretch:62% 125%;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("fonts/plex-mono-400.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("fonts/plex-mono-500.woff2") format("woff2");font-weight:500 600;font-display:swap}
+
 :root{
   --ink:        #1F2236;
   --ink-70:     #4A4D63;
@@ -11,7 +16,7 @@
   --card:       #FFFFFF;
   --line:       #DBDBD6;
   --line-soft:  #E5E5E1;
-  --muted:      #6E7080;
+  --muted:      #5F6173;
   --volt:       #1E33FF;
   --volt-10:    rgba(30,51,255,.08);
   --volt-20:    rgba(30,51,255,.16);
@@ -307,19 +312,10 @@ main{ min-width:0; }
 .about-grid{
   display:grid; grid-template-columns: .78fr 1.22fr; gap: clamp(32px,5vw,72px); align-items:start;
 }
-.about-photo{
-  position: relative; border:1px solid var(--line); background: var(--paper-alt);
-  overflow:hidden; aspect-ratio: 4/5;
-}
-.about-photo img{ width:100%; height:100%; object-fit:cover; object-position: top center; }
-.about-photo::after{
-  content:""; position:absolute; inset:0;
-  background: linear-gradient(180deg, transparent 60%, rgba(31,34,54,.55));
-  pointer-events:none;
-}
+.about-photo{ position: relative; margin:0; background: transparent; }
+.about-photo img{ display:block; width:100%; height:auto; max-width:520px; }
 .about-photo-cap{
-  position:absolute; left:16px; bottom:14px; z-index:2;
-  font-family: var(--font-mono); font-size:11.5px; color:#fff; letter-spacing:.04em;
+  margin-top:14px; font-family: var(--font-mono); font-size:11.5px; color: var(--muted); letter-spacing:.04em;
 }
 .about-facts{
   margin-top: 22px; border-top:1px solid var(--line);
@@ -699,7 +695,7 @@ footer.site-footer a:hover{ color: var(--volt); }
   display:grid; grid-template-columns: .9fr 1.4fr; gap: clamp(32px,5vw,72px); align-items:start;
 }
 .flag-text .eyebrow{ margin-bottom:14px; }
-.flag-text h3{ font-size: clamp(1.6rem,2.8vw,2.4rem); letter-spacing:-.02em; }
+.flag-text h3, .flag-text h2{ font-size: clamp(1.6rem,2.8vw,2.4rem); letter-spacing:-.02em; }
 .flag-text .body-text{ max-width:56ch; }
 .flag-fig{ margin:0 auto; width:100%; max-width: var(--maxw); padding: 0 var(--edge); }
 .flag-fig-inner{ max-width: calc(82vh * 16 / 9); margin: 0 auto; }
@@ -776,3 +772,30 @@ footer.site-footer a:hover{ color: var(--volt); }
 
 
 .theme-chinatours{ --paper:#F3F0EB; --paper-alt:#E9E4DD; --card:#FBF9F6; --line:#D6D0C7; --line-soft:#E2DDD5; --muted:#5F6173; --volt:#960B2A; --volt-10:rgba(150,11,42,.08); --volt-20:rgba(150,11,42,.16); --on-volt:#FFFFFF; }
+
+
+/* ================= v2 ADDITIONS — language switch, sister site, 404 ================= */
+.lang{ display:inline-flex; align-items:center; gap:2px; font-family:var(--font-mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; }
+.lang a{ padding:6px 7px; color:var(--muted); border:1px solid transparent; }
+.lang a:hover{ color:var(--volt); }
+.lang a[aria-current="true"]{ color:var(--ink); border-color:var(--line); pointer-events:none; }
+.lang a:focus-visible{ box-shadow:0 0 0 2px var(--ink); }
+.rail .lang{ flex-direction:column; gap:0; }
+.case-nav-right{ display:flex; align-items:center; gap:18px; }
+.case-nav-right .contact-link-sm{ font-family:var(--font-mono); font-size:12.5px; text-transform:uppercase; letter-spacing:.05em; }
+.case-nav-right .contact-link-sm:hover{ color:var(--volt); }
+.topbar-right{ display:flex; align-items:center; gap:10px; }
+.sister{ display:inline-flex; align-items:center; gap:8px; }
+.sister svg{ width:11px; height:11px; }
+.site-footer .foot-links{ display:flex; gap:18px; flex-wrap:wrap; align-items:center; }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{ outline:2px solid var(--ink); outline-offset:3px; box-shadow:none; border-radius:2px; }
+.theme-whizzle a:focus-visible, .theme-siroko a:focus-visible{ outline-color:#fff; }
+.notfound{ min-height:100vh; display:flex; flex-direction:column; justify-content:center; padding:0 var(--edge); gap:20px; max-width:var(--maxw); margin:0 auto; }
+.notfound h1{ font-size:clamp(3rem,10vw,8rem); font-weight:800; letter-spacing:-.04em; line-height:.95; }
+.notfound p{ max-width:46ch; color:var(--ink-70); }
+.notfound .row{ display:flex; gap:12px; flex-wrap:wrap; margin-top:10px; }
+
+/* fix: hero stats bled 4px past the viewport on phones (negative margin larger than the page gutter) */
+@media (max-width: 760px){ .hero-stats{ margin-left: calc(var(--edge) * -1); margin-right: calc(var(--edge) * -1); } }
+.flag-text h2{ font-size: clamp(1.6rem,2.8vw,2.4rem); letter-spacing:-.02em; }
+.theme-whizzle .result-card{ background:#4A39E0; }   /* white text on the lighter overlay was 2.8:1; now ≥ 7:1 */
