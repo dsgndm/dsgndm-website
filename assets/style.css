@@ -1009,7 +1009,7 @@ footer.site-footer{ display:block; padding:clamp(40px,6vw,72px) var(--edge) 28px
 @media (max-width:900px){ .foot-grid{ grid-template-columns:1fr 1fr; } .foot-brand{ grid-column:1/-1; } }
 @media (max-width:480px){ .foot-grid{ grid-template-columns:1fr; } }
 
-.svc-strip{ margin-top:clamp(48px,6vw,80px); padding-top:clamp(32px,4vw,48px); border-top:1px solid var(--line); }
+.svc-strip{ margin-top:clamp(48px,6vw,80px); padding-top:clamp(32px,4vw,48px); }
 .svc-links{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:22px; }
 .svc-link{ position:relative; display:flex; flex-direction:column; gap:10px; padding:22px 22px 26px; border:1px solid var(--line); border-radius:12px; background:var(--card, #fff); transition:border-color .2s, transform .2s; }
 .svc-link:hover{ border-color:var(--volt); transform:translateY(-2px); }
@@ -1029,7 +1029,7 @@ footer.site-footer{ display:block; padding:clamp(40px,6vw,72px) var(--edge) 28px
 .svc-cases{ grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); }
 .svc-cta{ display:flex; flex-direction:column; align-items:flex-start; gap:18px; }
 .svc-cta h2{ font:800 clamp(1.8rem,4vw,3rem)/1.05 var(--font-display); letter-spacing:-.03em; max-width:20ch; }
-.case-service{ max-width:var(--maxw); margin:0 auto; padding:28px var(--edge); display:flex; gap:18px; align-items:center; flex-wrap:wrap; border-top:1px solid var(--line); }
+.case-service{ max-width:var(--maxw); margin:0 auto; padding:28px var(--edge); display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
 .case-service a{ display:inline-flex; align-items:center; gap:8px; font:600 1rem var(--font-display); }
 .case-service a svg{ width:12px; height:12px; }
 .case-service a:hover{ color:var(--volt); }
@@ -1296,3 +1296,4 @@ footer.site-footer{ display:block; padding:clamp(40px,6vw,72px) var(--edge) 28px
 .ia-cu b{ position:absolute; left:13px; top:17px; background:var(--c); color:#fff; font:500 10px/1 var(--font-mono); padding:4px 7px; border-radius:3px 8px 8px 8px; white-space:nowrap; }
 .ia-cu::after{ content:""; position:absolute; left:-9px; top:-9px; width:18px; height:18px; border-radius:50%; border:2px solid var(--c); opacity:0; transform:scale(.4); }
 .ia-cu.down svg{ transform:scale(.85); } .ia-cu.down::after{ animation:iaclick .45s ease-out; } @keyframes iaclick{ 0%{ opacity:.9; transform:scale(.4); } 100%{ opacity:0; transform:scale(1.8); } }
+.section:has(+ .site-footer){ border-bottom:0; }
