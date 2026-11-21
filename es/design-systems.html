@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es" class="no-js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F5F2">
+<title>Design systems para productos digitales escalables | Diego Moreno</title>
+<meta name="description" content="Design systems en Figma: fundamentos, variables, componentes, documentación y adopción. Diseñador sénior que ha escalado uno para más de 300 concesionarios, con experiencia multimarca. Con base en España, trabajando en remoto con toda Europa.">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Design Systems for Scalable Digital Products">
+<meta property="og:description" content="Design systems en Figma: fundamentos, variables, componentes, documentación y adopción. Diseñador sénior que ha escalado uno para más de 300 concesionarios, con experiencia multimarca. Con base en España, trabajando en remoto con toda Europa.">
+<link rel="icon" href="../assets/img/logo-small.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/archivo-wdth.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="canonical" href="https://dsgndm.vercel.app/es/design-systems.html">
+<link rel="alternate" hreflang="en" href="https://dsgndm.vercel.app/design-systems.html">
+<link rel="alternate" hreflang="es" href="https://dsgndm.vercel.app/es/design-systems.html">
+<link rel="alternate" hreflang="x-default" href="https://dsgndm.vercel.app/design-systems.html">
+<meta property="og:url" content="https://dsgndm.vercel.app/es/design-systems.html">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://dsgndm.vercel.app/assets/img/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Design Systems for Scalable Digital Products">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://dsgndm.vercel.app/assets/img/og-cover.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://dsgndm.vercel.app/#diego","name":"Diego Moreno","jobTitle":"Senior Product Designer & Design Lead","description":"Senior Product Designer & Design Lead","url":"https://dsgndm.vercel.app/es/","image":"https://dsgndm.vercel.app/assets/img/diego-bw-1230.webp","address":{"@type":"PostalAddress","addressLocality":"Santander","addressRegion":"Cantabria","addressCountry":"ES"},"worksFor":{"@type":"Organization","name":"Kaavan"},"knowsLanguage":["es","en"],"sameAs":["https://www.behance.net/dsgndm","https://www.linkedin.com/in/diegomoreno-productdesigner"],"knowsAbout":["UX Design","UI Design","Product Design","Design Systems","Branding","Figma","Prototyping"]},{"@type":"WebSite","@id":"https://dsgndm.vercel.app/#website","url":"https://dsgndm.vercel.app/","name":"dsgn·dm"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://dsgndm.vercel.app/es/"},{"@type":"ListItem","position":2,"name":"Design Systems for Scalable Digital Products","item":"https://dsgndm.vercel.app/es/design-systems.html"}]},{"@type":"Service","name":"Design Systems for Scalable Digital Products","serviceType":"Design Systems for Scalable Digital Products","description":"Design systems en Figma: fundamentos, variables, componentes, documentación y adopción. Diseñador sénior que ha escalado uno para más de 300 concesionarios, con experiencia multimarca. Con base en España, trabajando en remoto con toda Europa.","url":"https://dsgndm.vercel.app/es/design-systems.html","inLanguage":"es","provider":{"@id":"https://dsgndm.vercel.app/#diego"},"areaServed":[{"@type":"Country","name":"Spain"},{"@type":"Place","name":"Europe"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Cuándo necesita una empresa un design system?","acceptedAnswer":{"@type":"Answer","text":"Cuando varias personas diseñan el producto, las pantallas empiezan a verse distintas, o desarrollo repite trabajo de interfaz y cada nueva funcionalidad tarda más que la anterior."}},{"@type":"Question","name":"¿Construyes la librería de componentes en código?","acceptedAnswer":{"@type":"Answer","text":"Diseño y documento el sistema en Figma y trabajo de cerca con desarrollo front-end en tokens, nomenclatura y especificaciones; la librería en código se construye con tu equipo de desarrollo."}},{"@type":"Question","name":"¿Puedes mejorar un sistema existente en lugar de empezar de cero?","acceptedAnswer":{"@type":"Answer","text":"Sí. A menudo es la mejor opción: auditar lo que funciona, reestructurar lo que no y migrar paso a paso sin parar el producto."}},{"@type":"Question","name":"¿Puede un design system dar servicio a varias marcas o clientes?","acceptedAnswer":{"@type":"Answer","text":"Sí. Con variables y modos de Figma, los mismos componentes pueden adaptarse a distintos estilos de marca. Lo hago con cientos de plantillas de concesionarios, cada una siguiendo su propia marca."}},{"@type":"Question","name":"¿Trabajas con equipos internacionales?","acceptedAnswer":{"@type":"Answer","text":"Sí. Trabajo en remoto con equipos y clientes de España, Países Bajos y toda Europa, en español o en inglés, y estoy acostumbrado al trabajo asíncrono y a la documentación clara."}}]}]}</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body class="page-service">
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<nav class="case-nav">
+  <a class="back" href="index.html"><svg viewBox="0 0 14 14" fill="none"><path d="M11 3L3 11M3 11H10M3 11V4" stroke="currentColor" stroke-width="1.4"/></svg> Volver al inicio</a>
+  <span class="case-nav-right"><a class="contact-link-sm nav-cta" href="index.html#contact">Hablemos</a><span class="lang" role="group" aria-label="Idioma"><a href="../design-systems.html" lang="en" hreflang="en" >EN</a><a href="design-systems.html" lang="es" hreflang="es" aria-current="true">ES</a></span><a class="brand" href="index.html">dsgn·dm</a></span>
+</nav>
+
+<main id="main">
+  <div class="case-hero-inner svc-visual svc-viz-wrap svc-viz-top">
+    <div class="vz vz-ds" data-viz="ds" role="img" aria-label="Lienzo animado estilo Figma: fundamentos de color, tipografía y espaciado y un componente botón con nueve variantes, que cambia entre claro y oscuro con variables.">
+      <div class="vz-in" aria-hidden="true"><span class="vz-tag" data-s="1">Design system · Fundamentos y componentes</span><span class="vz-tog" data-s="2"><b>Claro</b><b>Oscuro</b><u></u></span><div class="bd" data-s="1" style="left:5cqw;top:11.5cqw;width:90cqw;height:46cqw"><span class="lb" style="left:3cqw;top:3.3cqw">Color</span><div class="sw" data-s="2" style="left:3cqw;top:7.2cqw;--d:0.0s"><u style="background:#1F2236"></u><b>ink/900</b><em>#1F2236</em></div><div class="sw" data-s="2" style="left:3cqw;top:14.4cqw;--d:0.12s"><u style="background:#4A4D63"></u><b>ink/700</b><em>#4A4D63</em></div><div class="sw" data-s="2" style="left:3cqw;top:21.6cqw;--d:0.24s"><u style="background:#F5F5F2"></u><b>paper/50</b><em>#F5F5F2</em></div><div class="sw" data-s="2" style="left:3cqw;top:28.8cqw;--d:0.36s"><u style="background:#DBDBD6"></u><b>line/200</b><em>#DBDBD6</em></div><div class="sw" data-s="2" style="left:3cqw;top:36.0cqw;--d:0.48s"><u style="background:#1E33FF"></u><b>volt/500</b><em>#1E33FF</em></div><span class="lb" data-s="2" style="left:33cqw;top:3.3cqw">Tipo</span><div class="ty" data-s="3" style="left:33cqw;top:6.2cqw;--d:0s"><b style="font-size:8.6cqw">Aa</b><em>Display · 56 / 60</em></div><div class="ty" data-s="3" style="left:33cqw;top:18.4cqw;--d:.15s"><b style="font-size:4.8cqw">Aa</b><em>Título · 24 / 30</em></div><div class="ty" data-s="3" style="left:33cqw;top:27cqw;--d:.3s"><b style="font-size:2.8cqw">Aa</b><em>Body · 16 / 24</em></div><span class="lb" data-s="4" style="left:33cqw;top:35.6cqw">Espaciado · rejilla de 8 pt</span><i class="sp" data-s="4" style="left:33.0cqw;top:39.4cqw;width:2cqw;--d:0.0s"></i><i class="sp" data-s="4" style="left:36.6cqw;top:39.4cqw;width:4cqw;--d:0.12s"></i><i class="sp" data-s="4" style="left:42.2cqw;top:39.4cqw;width:6cqw;--d:0.24s"></i><i class="sp" data-s="4" style="left:49.8cqw;top:39.4cqw;width:8cqw;--d:0.36s"></i><span class="lb" data-s="5" style="left:63cqw;top:3.3cqw">Botón</span><span class="lb" data-s="5" style="left:63.0cqw;top:6.2cqw">Default</span><span class="lb" data-s="5" style="left:71.7cqw;top:6.2cqw">Hover</span><span class="lb" data-s="5" style="left:80.4cqw;top:6.2cqw">Disabled</span><i class="bt pr " data-s="5" style="left:63.0cqw;top:9.6cqw;--d:0.0s"></i><i class="bt pr hv" data-s="5" style="left:71.7cqw;top:9.6cqw;--d:0.08s"></i><i class="bt pr ds" data-s="5" style="left:80.4cqw;top:9.6cqw;--d:0.16s"></i><i class="bt se " data-s="5" style="left:63.0cqw;top:14.8cqw;--d:0.24s"></i><i class="bt se hv" data-s="5" style="left:71.7cqw;top:14.8cqw;--d:0.32s"></i><i class="bt se ds" data-s="5" style="left:80.4cqw;top:14.8cqw;--d:0.4s"></i><i class="bt gh " data-s="5" style="left:63.0cqw;top:20.0cqw;--d:0.48s"></i><i class="bt gh hv" data-s="5" style="left:71.7cqw;top:20.0cqw;--d:0.56s"></i><i class="bt gh ds" data-s="5" style="left:80.4cqw;top:20.0cqw;--d:0.64s"></i><div class="cd" data-s="7" style="left:63cqw;top:29cqw"><i class="k90" style="left:1.6cqw;top:1.8cqw;width:9cqw;height:1.2cqw"></i><i class="k30" style="left:1.6cqw;top:4.4cqw;width:18cqw;height:.8cqw"></i><i class="k30" style="left:1.6cqw;top:6.2cqw;width:13cqw;height:.8cqw"></i><i class="bt pr" style="left:1.6cqw;top:8.6cqw;width:7.6cqw;height:3.2cqw"></i></div><span class="lb" data-s="7" style="left:63cqw;top:26.6cqw">Card · instancia</span><div class="sel" data-s="6" style="left:61.6cqw;top:5cqw;width:27.4cqw;height:20.4cqw"><s></s><s></s><s></s><s></s><span>Botón · 9 variantes</span></div></div><div class="fig-cursor sy" data-cur="sy"><svg viewBox="0 0 18 22" aria-hidden="true"><path d="M2 1.5v15l4-3.6 3 6.5 2.6-1.2-3-6.3 5.4-.4z"/></svg><span class="fig-nm">Sistemas</span></div><div class="fig-cursor cr" data-cur="cr"><svg viewBox="0 0 18 22" aria-hidden="true"><path d="M2 1.5v15l4-3.6 3 6.5 2.6-1.2-3-6.3 5.4-.4z"/></svg><span class="fig-nm">Creatividad</span></div><div class="fig-cursor de" data-cur="de"><svg viewBox="0 0 18 22" aria-hidden="true"><path d="M2 1.5v15l4-3.6 3 6.5 2.6-1.2-3-6.3 5.4-.4z"/></svg><span class="fig-nm">Detalle</span></div><div class="fig-cursor em" data-cur="em"><svg viewBox="0 0 18 22" aria-hidden="true"><path d="M2 1.5v15l4-3.6 3 6.5 2.6-1.2-3-6.3 5.4-.4z"/></svg><span class="fig-nm">Empatía</span></div></div>
+    </div>
+  </div>
+  <header class="case-hero">
+    <div class="case-hero-inner">
+      <p class="eyebrow reveal">Servicios — Design systems</p>
+      <h1 class="reveal" style="margin-top:18px;">Design systems para productos digitales escalables</h1>
+      <p class="lede reveal" style="margin-top:20px;">Construyo y escalo design systems en Figma: fundamentos de color, tipografía y espaciado, componentes basados en variables, documentación y los hábitos que hacen que los equipos los usen de verdad. He sido responsable de uno de principio a fin en una plataforma SaaS con más de 300 concesionarios como clientes, y he construido otro desde cero para una app de consumo.</p>
+      <div class="case-meta-row reveal"><div><span>Enfoque</span><b>Design systems, librerías de componentes</b></div><div><span>Con base en</span><b>Santander, España · En remoto</b></div><div><span>Idiomas</span><b>Español, inglés</b></div><div><span>Herramientas</span><b>Figma, Miro, Notion, Jira</b></div></div>
+    </div>
+  </header>
+
+  <section class="case-section sec-what">
+    <div class="case-section-inner">
+<p class="eyebrow reveal">Qué hago</p>
+<p class="what-lead reveal">Un design system es la fuente común que permite que un producto crezca sin desmoronarse. Audito lo que existe, defino los fundamentos y construyo los componentes, con variantes y auto layout que aguantan contenido real y variable.</p>
+<div class="what-grid"><article class="what-card reveal"><h2>KWS: escalado y reconstruido</h2><p>En Kaavan heredé el design system de KWS, un creador de webs SaaS, y lo escalé y lo reconstruí en gran parte con nuevos componentes y variables mientras seguía dando servicio a cientos de webs en producción. Se basa en una rejilla de espaciado de 8 píxeles, estilos de color, tipografía y sombras, y componentes complejos que los clientes combinan en sus propios bloques, secciones y páginas.</p></article><article class="what-card reveal"><h2>Multimarca por diseño</h2><p>Es además un sistema multimarca: mantengo plantillas por cliente que siguen los estilos oficiales de las marcas de automoción y la identidad de cada grupo de concesionarios, de modo que los mismos componentes se adaptan a marcas muy distintas sin romperse.</p></article><article class="what-card reveal"><h2>Whizzle: construido desde cero</h2><p>En Whizzle construí un design system completo desde cero para una app de consumo, con base de 8 puntos, versiones clara y oscura y un brand book, de modo que producto y marca compartieran un mismo lenguaje visual desde el principio.</p></article><article class="what-card reveal"><h2>Estructura y forma de trabajar</h2><p>Organizo las librerías de Figma en archivos independientes, con librerías propias para logotipos, iconos y tipografías, y recomiendo un enfoque mobile first, para que el sistema sea ágil de usar y fácil de traducir a código para los desarrolladores.</p></article></div>
+    </div>
+  </section>
+  <section class="case-section sec-blue">
+    <div class="case-section-inner svc-stats reveal">
+      <div><b>20+</b><span>Años de experiencia</span></div>
+      <div><b>100+</b><span>Marcas diseñadas</span></div>
+      <div><b>300+</b><span>Concesionarios clientes atendidos</span></div>
+    </div>
+  </section>
+  <section class="case-section sec-who">
+    <div class="case-section-inner who-wrap">
+<div class="who-head reveal"><p class="eyebrow">Para quién es</p><div class="who-nav"><button type="button" class="who-btn" data-dir="-1" aria-label="Anterior"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg></button><button type="button" class="who-btn" data-dir="1" aria-label="Siguiente"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></button></div></div>
+<div class="who-scroller reveal" tabindex="0" role="region" aria-label="Para quién es">        <ul class="who-track">
+          <li><b>01</b>Productos con varios diseñadores o pantallas que han empezado a divergir.</li>
+          <li><b>02</b>Equipos de desarrollo que reconstruyen una y otra vez las mismas piezas de interfaz y necesitan una referencia común con nomenclatura y estados claros.</li>
+          <li><b>03</b>Empresas que lanzan funcionalidades más rápido de lo que el diseño puede seguir y buscan coherencia sin perder velocidad.</li>
+          <li><b>04</b>Plataformas SaaS y B2B que dan servicio a muchos clientes o marcas y necesitan un sistema multimarca o white-label.</li>
+          <li><b>05</b>Equipos que quieren que marca y producto compartan un único lenguaje visual, con tokens y variables.</li>
+          <li><b>06</b>Startups que construyen su primer design system y quieren que sea pequeño, útil y preparado para crecer.</li>
+          <li><b>07</b>Agencias y estudios que necesitan un diseñador sénior para estructurar las librerías de Figma de un proyecto de cliente.</li>
+          <li><b>08</b>Reclutadores y responsables de contratación que buscan un diseñador sénior o lead con experiencia real a cargo de un design system y un perfil multidisciplinar.</li>
+        </ul></div>
+<div class="who-bar" aria-hidden="true"><i></i></div>
+    </div>
+  </section>
+  <section class="case-section sec-dark">
+    <div class="case-section-inner">
+      <p class="eyebrow reveal">Cómo trabajo</p>
+      <div class="svc-steps reveal"><div class="svc-step"><span class="n">01</span><p class="st">Auditoría</p><p>inventario de pantallas, componentes e inconsistencias.</p></div><div class="svc-step"><span class="n">02</span><p class="st">Fundamentos</p><p>color, tipografía, espaciado sobre una rejilla de 8 píxeles, sombras y variables.</p></div><div class="svc-step"><span class="n">03</span><p class="st">Componentes</p><p>variantes, auto layout y estados, probados con contenido real.</p></div><div class="svc-step"><span class="n">04</span><p class="st">Documentación</p><p>reglas de uso, nomenclatura y ejemplos en Figma.</p></div><div class="svc-step"><span class="n">05</span><p class="st">Adopción</p><p>entrega a desarrollo y un plan para mantener vivo el sistema.</p></div></div>
+    </div>
+  </section>
+  <section class="case-section sec-get">
+    <div class="case-section-inner">
+<p class="eyebrow reveal">Qué recibes</p>
+        <ul class="get-grid reveal">
+          <li><b>01</b>Una librería de Figma con fundamentos, estilos y variables, incluidos los modos claro y oscuro cuando hacen falta.</li>
+          <li><b>02</b>Componentes documentados con variantes, estados y comportamiento responsive, probados con contenido real.</li>
+          <li><b>03</b>Nomenclatura y estructura alineadas con el front-end, para que diseñadores y desarrolladores hablen el mismo idioma.</li>
+          <li><b>04</b>Temas multimarca o por cliente mediante variables, cuando tu producto lo necesita.</li>
+          <li><b>05</b>Guías de uso y ejemplos para diseñadores, desarrolladores y equipos de marketing.</li>
+          <li><b>06</b>Una auditoría del producto actual con las incoherencias encontradas y las prioridades para corregirlas.</li>
+          <li><b>07</b>Una hoja de ruta para ampliar el sistema con el tiempo y un proceso para mantenerlo vivo.</li>
+          <li><b>08</b>Acompañamiento mientras tu equipo lo adopta, en español o en inglés.</li>
+        </ul>
+    </div>
+  </section>
+  <section class="case-section sec-why">
+    <div class="case-section-inner">
+<p class="eyebrow reveal">Por qué trabajar conmigo</p>
+<div class="why-split"><div class="why-text reveal"><p class="why-lead">He estado tanto del lado que construye un design system como del que lo usa. Sé qué hace que los equipos lo adopten —nomenclatura clara, componentes que aguantan contenido real, documentación rápida— y qué hace que lo ignoren. Por eso los sistemas que construyo son prácticos primero y elegantes después.</p><p>Mi perfil es multidisciplinar: diseño gráfico, branding, UX/UI, diseño de producto y design systems. Tras más de 20 años, puedo conectar la marca, la interfaz y el sistema en un único trabajo coherente, colaborando en remoto con equipos de España, Europa y Estados Unidos.</p><p>Si buscas un diseñador de design systems, un diseñador de producto o un lead designer que se haga cargo del sistema y del producto que lo rodea, hablemos.</p><a class="btn btn-primary" href="index.html#contact">Hablemos</a></div><figure class="ill-wrap ia-wrap reveal"><div class="ia" data-scene="ds" data-cols="#E4E7FF #C4CAFF #9AA5FF #6573FF #1E33FF #1829CC #121F99 #0D1666 #080E44" role="img" aria-label="Ilustración animada estilo Figma de una página de documentación de un design system: se seleccionan los estilos de texto y se explora la rampa de color con sus tokens."><span class="ia-tag" aria-hidden="true">Design systems · Docs</span><svg class="ia-s" viewBox="0 0 400 400" aria-hidden="true"><g class="el" data-t=".1"><rect class="card" x="58" y="60" width="284" height="170" rx="14"/><text class="t" x="76" y="84">tipografía / escala</text></g><g class="el" data-t=".5"><text class="aa" x="76" y="132" style="font-size:44px;font-weight:700">Aa</text><text class="t" x="190" y="112">H1</text><text class="t ik" x="190" y="126">40 / 48 · 700</text></g><g class="el" data-t=".9"><rect class="k3" x="76" y="144" width="248" height="1"/><text class="aa" x="76" y="178" style="font-size:28px;font-weight:700">Aa</text><text class="t" x="190" y="162">H2</text><text class="t ik" x="190" y="176">28 / 36 · 600</text></g><g class="el" data-t="1.3"><rect class="k3" x="76" y="190" width="248" height="1"/><text class="aa" x="76" y="218" style="font-size:18px;font-weight:600">Aa</text><text class="t" x="190" y="206">Cuerpo</text><text class="t ik" x="190" y="220">16 / 24 · 400</text></g><g class="el" data-t="1.8"><text class="t" x="58" y="264">color / primario</text></g><rect class="el rp" data-t="2.00" data-i="0" x="58" y="274" width="30" height="46" rx="5" fill="#E4E7FF"/><rect class="el rp" data-t="2.12" data-i="1" x="90" y="274" width="30" height="46" rx="5" fill="#C4CAFF"/><rect class="el rp" data-t="2.24" data-i="2" x="122" y="274" width="30" height="46" rx="5" fill="#9AA5FF"/><rect class="el rp" data-t="2.36" data-i="3" x="154" y="274" width="30" height="46" rx="5" fill="#6573FF"/><rect class="el rp" data-t="2.48" data-i="4" x="186" y="274" width="30" height="46" rx="5" fill="#1E33FF"/><rect class="el rp" data-t="2.60" data-i="5" x="218" y="274" width="30" height="46" rx="5" fill="#1829CC"/><rect class="el rp" data-t="2.72" data-i="6" x="250" y="274" width="30" height="46" rx="5" fill="#121F99"/><rect class="el rp" data-t="2.84" data-i="7" x="282" y="274" width="30" height="46" rx="5" fill="#0D1666"/><rect class="el rp" data-t="2.96" data-i="8" x="314" y="274" width="30" height="46" rx="5" fill="#080E44"/><g class="el" data-t="3.0"><rect class="chip" x="58" y="330" width="150" height="20" rx="5"/><text class="chipt tok" x="133" y="343" text-anchor="middle">primary/500 · #1E33FF</text></g></svg><span hidden data-k="r0">H1</span><span hidden data-k="r1">H2</span><span hidden data-k="r2">Cuerpo</span><div class="ia-sel" aria-hidden="true"><i></i><i></i><i></i><i></i><span></span></div><div class="ia-cu cr" aria-hidden="true"><svg viewBox="0 0 18 22"><path d="M1 1v17l4.6-4.2 3.4 7.2 3-1.4-3.4-7H15z"/></svg><b>Creatividad</b></div><div class="ia-cu sy" aria-hidden="true"><svg viewBox="0 0 18 22"><path d="M1 1v17l4.6-4.2 3.4 7.2 3-1.4-3.4-7H15z"/></svg><b>Sistemas</b></div></div></figure></div>
+    </div>
+  </section>
+  <section class="case-section sec-faq">
+    <div class="case-section-inner">
+<p class="eyebrow reveal">Preguntas frecuentes</p>
+        <div class="faq">
+          <details class="faq-item"><summary>¿Cuándo necesita una empresa un design system?</summary><p class="body-text">Cuando varias personas diseñan el producto, las pantallas empiezan a verse distintas, o desarrollo repite trabajo de interfaz y cada nueva funcionalidad tarda más que la anterior.</p></details>
+          <details class="faq-item"><summary>¿Construyes la librería de componentes en código?</summary><p class="body-text">Diseño y documento el sistema en Figma y trabajo de cerca con desarrollo front-end en tokens, nomenclatura y especificaciones; la librería en código se construye con tu equipo de desarrollo.</p></details>
+          <details class="faq-item"><summary>¿Puedes mejorar un sistema existente en lugar de empezar de cero?</summary><p class="body-text">Sí. A menudo es la mejor opción: auditar lo que funciona, reestructurar lo que no y migrar paso a paso sin parar el producto.</p></details>
+          <details class="faq-item"><summary>¿Puede un design system dar servicio a varias marcas o clientes?</summary><p class="body-text">Sí. Con variables y modos de Figma, los mismos componentes pueden adaptarse a distintos estilos de marca. Lo hago con cientos de plantillas de concesionarios, cada una siguiendo su propia marca.</p></details>
+          <details class="faq-item"><summary>¿Trabajas con equipos internacionales?</summary><p class="body-text">Sí. Trabajo en remoto con equipos y clientes de España, Países Bajos y toda Europa, en español o en inglés, y estoy acostumbrado al trabajo asíncrono y a la documentación clara.</p></details>
+        </div>
+    </div>
+  </section>
+  <section class="case-section">
+    <div class="case-section-inner">
+      <p class="eyebrow reveal">Casos de estudio relacionados</p>
+      <div class="work-grid svc-cases" style="margin-top:28px;">
+        <a class="case-card reveal" href="case-kws.html">
+            <div class="case-media"><img decoding="async" width="900" height="591" src="../assets/img/cases/kws/kws-card-900.webp" srcset="../assets/img/cases/kws/kws-card-480.webp 480w, ../assets/img/cases/kws/kws-card-900.webp 900w" sizes="(min-width:1100px) 30vw, (min-width:980px) 28vw, 92vw" alt="Fotografía de estudio de un coche usada en el marketing de KWS" loading="lazy"></div>
+            <div class="case-body"><div class="case-title"><h2>Kaavan KWS</h2><span class="case-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H4M11 3V10" stroke="#1F2236" stroke-width="1.4"/></svg></span></div></div>
+          </a><a class="case-card reveal" href="case-whizzle.html">
+            <div class="case-media"><img decoding="async" width="900" height="591" src="../assets/img/cases/whizzle/whizzle-card-900.webp" srcset="../assets/img/cases/whizzle/whizzle-card-480.webp 480w, ../assets/img/cases/whizzle/whizzle-card-900.webp 900w" sizes="(min-width:1100px) 30vw, (min-width:980px) 28vw, 92vw" alt="Foto de retrato de la campaña de marca de Whizzle" loading="lazy"></div>
+            <div class="case-body"><div class="case-title"><h2>Whizzle</h2><span class="case-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H4M11 3V10" stroke="#1F2236" stroke-width="1.4"/></svg></span></div></div>
+          </a>
+      </div>
+    </div>
+  </section>
+  <section class="case-section sec-dark sec-cta">
+    <div class="case-section-inner svc-cta reveal">
+      <h2>¿Tu producto se está quedando pequeño para su diseño?</h2>
+      <p class="body-text">Cuéntame cómo trabaja hoy tu equipo y dónde os duele.</p>
+      <a class="btn btn-primary" href="index.html#contact">Hablemos</a>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+      <div class="foot-grid">
+        <div class="foot-brand"><a class="foot-logo" href="index.html">dsgn·dm</a><p>Diseñador de producto y de marca con base en Santander (España), trabajando en remoto con equipos de toda Europa.</p></div>
+        <nav aria-label="Servicios"><p class="foot-h">Servicios</p><ul>
+          <li><a href="ux-ui-design.html">Diseño UX/UI y de producto</a></li><li><a href="branding-design.html">Branding e identidad</a></li><li><a href="design-systems.html">Design systems</a></li></ul></nav>
+        <nav aria-label="Proyectos"><p class="foot-h">Proyectos</p><ul>
+          <li><a href="case-kws.html">Kaavan KWS</a></li><li><a href="case-whizzle.html">Whizzle</a></li><li><a href="case-ayucell.html">Ayucell</a></li><li><a href="index.html#work">Todos los proyectos</a></li></ul></nav>
+        <div><p class="foot-h">Contacto</p><ul>
+          <li><a href="#" data-reveal="moc.liamg@mdngsd" data-reveal-type="mail"><span class="reveal-text">Clic para ver el email</span></a></li>
+          <li><a href="https://www.linkedin.com/in/diegomoreno-productdesigner" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://www.behance.net/dsgndm" target="_blank" rel="noopener">Behance</a></li>
+          <li><a class="pdf-link" href="../assets/portfolio-diego-moreno-es.pdf" download>Portfolio en PDF</a></li></ul></div>
+      </div>
+      <div class="foot-bottom"><span>© 2026 Diego Moreno — dsgn·dm</span>
+        <span class="foot-legal"><a href="legal.html">Aviso legal y privacidad</a></span></div>
+    </footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="../assets/main.js"></script>
+</body>
+</html>

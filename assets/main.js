@@ -80,6 +80,125 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
+
+  /* ---------------- Service pages: animated Figma-style visuals ---------------- */
+  (function svcViz(){
+    const roots = document.querySelectorAll('.vz[data-viz]');
+    if (!roots.length) return;
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    roots.forEach(root => {
+      const q = sel => root.querySelector(sel);
+      const on = n => root.querySelectorAll('[data-s="' + n + '"]').forEach(e => e.classList.add('on'));
+      const cur = k => q('[data-cur="' + k + '"]');
+      // first call spawns the cursor at x,y; later calls glide there
+      const mv = (k, x, y, ms) => {
+        const c = cur(k); if (!c) return;
+        if (!c.classList.contains('on')) { c.style.transitionDuration = '0s'; c.style.left = x + '%'; c.style.top = y + '%'; void c.offsetWidth; c.style.transitionDuration = ''; c.classList.add('on'); return; }
+        c.style.transitionDuration = '.3s,' + ms + 'ms,' + ms + 'ms'; c.style.left = x + '%'; c.style.top = y + '%';
+      };
+      const hide = k => { const c = cur(k); if (c) c.classList.remove('on'); };
+      const tap = async k => { const c = cur(k); c.classList.add('down'); await wait(300); c.classList.remove('down'); };
+      const roam = async (tok, k, pts, ms, i = 0) => { while (tok.live) { const p = pts[i++ % pts.length]; mv(k, p[0], p[1], ms); await wait(ms + 80); } };
+      const clear = () => { root.querySelectorAll('.on').forEach(e => e.classList.remove('on')); root.querySelectorAll('.hl,.done,.dark,.dk,.filled').forEach(e => e.classList.remove('hl','done','dark','dk','filled')); };
+      const showAll = () => { root.querySelectorAll('[data-s]').forEach(e => e.classList.add('on')); };
+      const T = {
+        ux: async tok => {
+          const ph = k => q('[data-ph="' + k + '"]');
+          mv('cr', 10, 17, 1); mv('sy', 58, 9, 1); on(1);
+          await wait(200); on(2); mv('cr', 14, 30, 380); mv('sy', 30, 24, 420); mv('em', 92, 60, 1);
+          await wait(340); on(3); mv('cr', 46, 18, 420); mv('sy', 22, 52, 420); mv('em', 70, 58, 450);
+          await wait(200); on(4); mv('sy', 48, 40, 420);
+          await wait(330); on(5); mv('cr', 80, 20, 420); mv('em', 44, 56, 420);
+          await wait(200); on(6); mv('sy', 78, 42, 450); mv('cr', 90, 50, 450);
+          await wait(420); hide('cr'); mv('de', 22, 82, 1); await wait(30);
+          mv('de', 26, 78, 300); on(7); mv('em', 26, 50, 450); await wait(320);
+          mv('de', 41, 54, 560); await wait(500); on(8); mv('de', 73, 54, 600); mv('sy', 60, 14, 500);
+          await wait(560); on(9); mv('sy', 88, 8, 400); mv('em', 18, 82, 700); mv('de', 66, 24, 500);
+          await wait(650); await tap('em'); ph('b').classList.add('hl');
+          mv('em', 50, 82, 600); await wait(620); await tap('em'); ph('c').classList.add('hl');
+          mv('em', 82, 82, 600); roam(tok, 'de', [[30, 20], [56, 24], [82, 30], [60, 60]], 450); await wait(620); await tap('em'); ph('c').classList.add('done');
+          roam(tok, 'sy', [[20, 40], [48, 36], [78, 44]], 500);
+          await wait(1500);
+        },
+        brand: async tok => {
+          const ab = q('.ab'), tr = q('.ab .tr');
+          mv('cr', 8, 14, 1); mv('sy', 52, 9, 1); on(1);
+          await wait(200); on(2); mv('cr', 12, 20, 350); mv('sy', 60, 18, 450);
+          await wait(350); on(3); tr.classList.add('on'); mv('cr', 14, 30, 300); mv('em', 40, 54, 1);
+          await wait(280); mv('cr', 32, 26, 360); mv('em', 30, 44, 700);
+          await wait(360); mv('cr', 24, 44, 330);
+          await wait(330); mv('cr', 12, 30, 330); mv('em', 18, 22, 600);
+          await wait(450); ab.classList.add('filled'); on(4); tr.classList.add('done'); mv('cr', 38, 46, 500); mv('em', 36, 10, 500);
+          await wait(450); on(5); hide('cr'); mv('de', 52, 12, 1); mv('sy', 84, 20, 700); mv('em', 46, 30, 500);
+          await wait(120); mv('de', 80, 20, 650);
+          await wait(560); on(6); mv('de', 58, 36, 600); mv('sy', 88, 36, 500); mv('em', 64, 44, 500);
+          await wait(500); on(7); mv('de', 56, 52, 500); mv('em', 80, 36, 500);
+          await wait(360); on(8); mv('de', 74, 52, 450); mv('sy', 70, 30, 500);
+          await wait(320); on(9); mv('de', 86, 52, 400); mv('em', 56, 58, 500);
+          roam(tok, 'sy', [[62, 22], [84, 50], [66, 50]], 500); roam(tok, 'em', [[48, 36], [72, 14], [90, 30]], 520);
+          await wait(1500);
+        },
+        ds: async tok => {
+          const bd = q('.bd'), tg = q('.vz-tog');
+          mv('sy', 8, 15, 1); mv('cr', 9, 55, 1); on(1);
+          await wait(200); on(2); mv('sy', 14, 30, 400); mv('cr', 12, 46, 600); mv('de', 50, 10, 1);
+          await wait(330); on(3); mv('de', 40, 24, 450); mv('sy', 30, 20, 400);
+          await wait(380); on(4); mv('de', 38, 52, 450); mv('cr', 44, 58, 500); mv('sy', 52, 30, 450);
+          await wait(380); on(5); mv('sy', 70, 28, 450); mv('em', 90, 55, 1); mv('de', 62, 14, 500);
+          await wait(520); on(6); mv('em', 90, 40, 500); mv('cr', 66, 50, 500);
+          await wait(380); on(7); mv('sy', 82, 8, 650); mv('de', 70, 40, 500); mv('em', 72, 52, 500);
+          await wait(700); await tap('sy'); bd.classList.add('dark'); tg.classList.add('dk');
+          roam(tok, 'de', [[30, 28], [60, 30], [76, 22]], 450); roam(tok, 'cr', [[20, 50], [48, 44], [72, 54]], 520);
+          await wait(1500); mv('sy', 82, 8, 150); await wait(180); await tap('sy'); bd.classList.remove('dark'); tg.classList.remove('dk');
+          roam(tok, 'em', [[56, 24], [80, 34], [66, 48]], 450);
+          await wait(1100);
+        }
+      };
+      if (reduceMotion || !window.IntersectionObserver) { showAll(); return; }
+      let visible = false, running = false;
+      new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible && !running) loop(); }, { threshold: .35 }).observe(root);
+      async function loop(){
+        running = true;
+        while (visible) {
+          const tok = { live: true };
+          await T[root.dataset.viz](tok);
+          tok.live = false;
+          if (!visible) break;
+          root.classList.add('rs'); root.querySelectorAll('.fig-cursor').forEach(c => c.classList.remove('on'));
+          clear(); await wait(600); root.classList.remove('rs'); await wait(100);
+        }
+        running = false;
+      }
+    });
+  })();
+
+  /* ---------------- Service pages: horizontal "who it's for" carousel ---------------- */
+  (function whoCarousel(){
+    document.querySelectorAll('.who-wrap').forEach(w => {
+      const sc = w.querySelector('.who-scroller'), bar = w.querySelector('.who-bar i'), btns = w.querySelectorAll('.who-btn');
+      const upd = () => {
+        const max = sc.scrollWidth - sc.clientWidth, f = Math.min(1, sc.clientWidth / sc.scrollWidth);
+        bar.style.width = (f * 100) + '%';
+        bar.style.transform = 'translateX(' + (max > 0 ? sc.scrollLeft / max * (1 / f - 1) * 100 : 0) + '%)';
+        btns[0].disabled = sc.scrollLeft < 4; btns[1].disabled = sc.scrollLeft > max - 4;
+      };
+      btns.forEach(b => b.addEventListener('click', () => { const c = sc.querySelector('li'); sc.scrollBy({ left: b.dataset.dir * (c.offsetWidth + 16), behavior: reduceMotion ? 'auto' : 'smooth' }); }));
+      sc.addEventListener('scroll', upd, { passive: true }); window.addEventListener('resize', upd); upd();
+      // autoplay: one card every few seconds, pauses on hover / focus / touch and when off-screen
+      let vis = false, hover = false, focus = false, last = 0;
+      const nudge = () => { const c = sc.querySelector('li'), max = sc.scrollWidth - sc.clientWidth; if (sc.scrollLeft >= max - 4) sc.scrollTo({ left: 0, behavior: 'smooth' }); else sc.scrollBy({ left: c.offsetWidth + 16, behavior: 'smooth' }); };
+      if (window.IntersectionObserver) new IntersectionObserver(es => { vis = es[0].isIntersecting; }, { threshold: .4 }).observe(sc);
+      if (!reduceMotion) setInterval(() => { if (vis && !hover && !focus && Date.now() - last > 4500) nudge(); }, 2800);
+      w.addEventListener('mouseenter', () => { hover = true; }); w.addEventListener('mouseleave', () => { hover = false; });
+      w.addEventListener('focusin', () => { focus = true; }); w.addEventListener('focusout', () => { focus = false; });
+      ['touchstart', 'pointerdown', 'wheel', 'click'].forEach(ev => w.addEventListener(ev, () => { last = Date.now(); }, { passive: true }));
+      let down = false, sx = 0, sl = 0;
+      sc.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; down = true; sx = e.clientX; sl = sc.scrollLeft; sc.classList.add('drag'); });
+      window.addEventListener('pointermove', e => { if (down) sc.scrollLeft = sl - (e.clientX - sx); });
+      window.addEventListener('pointerup', () => { down = false; sc.classList.remove('drag'); });
+    });
+  })();
+
   /* ---------------- Hero FX (preview): Figma-style canvas, cursors build a component + logo ---------------- */
   (function figHero(){
     const hero = document.querySelector('.hero-fx');
@@ -630,3 +749,90 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
+
+/* Animated Figma-style illustrations: easing cursors on curved paths, idle drift, hover/click states */
+(function illAnim(){
+  var boxes=[].slice.call(document.querySelectorAll('.ia[data-scene]'));
+  if(!boxes.length) return;
+  var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var ease=function(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;};
+  var $=function(b,s){return b.querySelector(s);}, $$=function(b,s){return [].slice.call(b.querySelectorAll(s));};
+  var flash=function(el,c,ms){if(!el)return;el.classList.remove(c);void el.getBoundingClientRect();el.classList.add(c);setTimeout(function(){el.classList.remove(c);},ms||450);};
+  function bump(el){flash(el,'bump',420);}
+
+  var SC={
+    ux:{loop:10.5,
+      cur:[[[.5,60,70],[1.9,114,58],[3.2,282,334],[4.3,205,302],[4.9,214,308],[6.3,330,300],[8.0,300,190],[9.2,360,110]],
+           [[.9,340,50],[2.3,178,258],[3.7,246,110],[5.2,300,150],[7.0,310,235],[8.6,290,80]]],
+      ev:[[2.34,function(b){$(b,'.plus').classList.add('hov');}],[2.5,function(b,c){c(1);var q=$(b,'.qty'),p=$(b,'.price');q.textContent='2';p.textContent='49,80 €';bump(q);bump(p);}],[2.9,function(b){$(b,'.plus').classList.remove('hov');}],
+          [3.1,function(b){flash($(b,'.chip1'),'pulse',520);}],
+          [3.78,function(b,c){c(1);$(b,'.heart').classList.add('liked');}],
+          [4.35,function(b){$(b,'.btn1').classList.add('hov');}],[4.62,function(b,c){c(0);var g=$(b,'.btn1');flash(g,'press',380);g.querySelector('.btl').textContent=$(b,'[data-k=done]').textContent;}],
+          [6.4,function(b){flash($(b,'.ok'),'pulse',500);}]],
+      reset:function(b){$(b,'.plus').classList.remove('hov');var q=$(b,'.qty'),p=$(b,'.price');q.textContent='1';p.textContent='24,90 €';$(b,'.heart').classList.remove('liked');var g=$(b,'.btn1');g.classList.remove('hov');g.querySelector('.btl').textContent=b._pay;},
+      init:function(b){b._pay=$(b,'.btl').textContent;},
+      final:function(b){$(b,'.qty').textContent='1';}},
+    br:{loop:10.5,
+      cur:[[[.6,340,60],[3.0,306,330],[3.9,310,330],[5.0,284,330],[6.4,300,250],[8.5,340,120]],
+           [[.9,80,250],[1.8,196,98],[2.8,271,104],[5.5,236,336],[7.5,330,200],[9,340,100]]],
+      ev:[[3.15,function(b,c){c(0);$$(b,'.logo').forEach(function(l){l.classList.add('ink');});}],[5.15,function(b,c){c(0);$$(b,'.logo').forEach(function(l){l.classList.remove('ink');});}],
+          [1.9,function(b){$$(b,'.xm').forEach(function(x){x.style.fill='var(--volt)';});}],[2.9,function(b){$$(b,'.xm').forEach(function(x){x.style.fill='';});}],
+          [5.7,function(b){$(b,'.tip').classList.add('on');}],[7.3,function(b){$(b,'.tip').classList.remove('on');}]],
+      reset:function(b){$$(b,'.logo').forEach(function(l){l.classList.remove('ink');});$$(b,'.xm').forEach(function(x){x.style.fill='';});$(b,'.tip').classList.remove('on');},
+      hover:function(b,pts){var sw=$$(b,'.swc');sw.forEach(function(s,i){var x=276+i*22,on=pts[0]&&Math.abs(pts[0][0]-(x+2))<11&&Math.abs(pts[0][1]-330)<12;s.classList.toggle('hov',!!on);});}},
+    ds:{loop:10.5,
+      cur:[[[.6,340,60],[2.0,100,118],[3.2,100,168],[4.4,100,212],[6.6,330,240],[8.5,300,100]],
+           [[1.0,48,300],[3.4,73,300],[4.6,201,300],[5.6,201,300],[6.6,297,300],[8.2,330,350],[9.4,350,360]]],
+      ev:[[2.15,function(b,c){c(0);sel(b,0);}],[3.35,function(b,c){c(0);sel(b,1);}],[4.55,function(b,c){c(0);sel(b,2);}],[6.0,function(b){$(b,'.ia-sel').classList.remove('on');}]],
+      reset:function(b){$(b,'.ia-sel').classList.remove('on');$$(b,'.rp').forEach(function(r){r.classList.remove('hov');});setTok(b,4);},
+      hover:function(b,pts){var p=pts[1],idx=-1;if(p&&p[1]>268&&p[1]<324){idx=Math.floor((p[0]-58)/32);if(idx<0||idx>8)idx=-1;}$$(b,'.rp').forEach(function(r,i){r.classList.toggle('hov',i===idx);});if(idx>=0)setTok(b,idx);}}
+  };
+  var ROWS=[[68,90,264,50],[68,148,264,44],[68,198,264,30]];
+  function sel(b,i){var s=$(b,'.ia-sel'),k=b.clientWidth/400,r=ROWS[i];s.style.width=r[2]*k+'px';s.style.height=r[3]*k+'px';s.style.transform='translate('+r[0]*k+'px,'+r[1]*k+'px)';s.querySelector('span').textContent=$(b,'[data-k=r'+i+']').textContent;s.classList.add('on');}
+  function setTok(b,i){var cols=b.getAttribute('data-cols').split(' ');var t=$(b,'.tok');if(t)t.textContent='primary/'+(i+1)+'00 · '+cols[i].toUpperCase();}
+
+  function pos(w,t,k,idx){
+    if(!w.length||t<w[0][0]) return null;
+    var n=w.length,x,y,mv=0;
+    if(t>=w[n-1][0]){x=w[n-1][1];y=w[n-1][2];}
+    else{for(var i=0;i<n-1;i++){var a=w[i],c=w[i+1];if(t>=a[0]&&t<c[0]){
+      var dep=Math.max(a[0]+.35,c[0]-1.25),u=(t-dep)/(c[0]-dep);
+      if(u<=0){x=a[1];y=a[2];}else{mv=1;u=ease(Math.min(1,u));
+        var dx=c[1]-a[1],dy=c[2]-a[2],len=Math.sqrt(dx*dx+dy*dy)||1,sg=(i+idx)%2?1:-1,cx=(a[1]+c[1])/2-dy/len*len*.18*sg,cy=(a[2]+c[2])/2+dx/len*len*.18*sg;
+        x=(1-u)*(1-u)*a[1]+2*(1-u)*u*cx+u*u*c[1];y=(1-u)*(1-u)*a[2]+2*(1-u)*u*cy+u*u*c[2];}
+      break;}}}
+    var ph=idx*1.7,wob=mv?0:1;
+    x+=Math.sin(t*2.1+ph)*1.8*wob;y+=Math.cos(t*1.7+ph)*1.5*wob;
+    return [x,y];
+  }
+
+  function init(bx){
+    var sc=SC[bx.dataset.scene];if(!sc)return;
+    var els=$$(bx,'[data-t]'),cus=$$(bx,'.ia-cu');
+    if(sc.init)sc.init(bx);
+    if(rm){els.forEach(function(e){e.classList.add('on');});if(sc.final)sc.final(bx);cus.forEach(function(c){c.style.display='none';});return;}
+    var vis=false,raf=0,t0=0,ei=0,tids=[];
+    function click(i){var c=cus[i];if(!c)return;c.classList.add('down');setTimeout(function(){c.classList.remove('down');},420);}
+    var evs=sc.ev.slice().sort(function(a,b){return a[0]-b[0];});
+    var trig=els.map(function(e){return [+e.dataset.t,e];}).sort(function(a,b){return a[0]-b[0];}),ti=0;
+    function reset(){els.forEach(function(e){e.classList.remove('on');});cus.forEach(function(c){c.classList.remove('on');});sc.reset&&sc.reset(bx);ei=0;ti=0;}
+    function frame(now){
+      raf=requestAnimationFrame(frame);
+      var t=(now-t0)/1000;
+      if(t>=sc.loop){t0=now;reset();return;}
+      while(ti<trig.length&&trig[ti][0]<=t){trig[ti][1].classList.add('on');ti++;}
+      while(ei<evs.length&&evs[ei][0]<=t){evs[ei][1](bx,click);ei++;}
+      var k=bx.clientWidth/400,pts=[];
+      cus.forEach(function(c,i){var p=pos(sc.cur[i],t,k,i);pts[i]=p;if(!p)return;
+        if(!c.classList.contains('on')&&t<sc.loop-1)c.classList.add('on');
+        if(t>sc.loop-.9)c.classList.remove('on');
+        c.style.transform='translate3d('+p[0]*k+'px,'+p[1]*k+'px,0)';});
+      if(sc.hover)sc.hover(bx,pts);
+    }
+    function start(){if(raf)return;reset();t0=performance.now();raf=requestAnimationFrame(frame);}
+    function stop(){cancelAnimationFrame(raf);raf=0;}
+    new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting&&!document.hidden)start();else stop();});},{threshold:.3}).observe(bx);
+    document.addEventListener('visibilitychange',function(){if(document.hidden)stop();});
+  }
+  boxes.forEach(init);
+})();
