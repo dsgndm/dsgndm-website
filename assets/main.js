@@ -836,3 +836,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   boxes.forEach(init);
 })();
+
+/* Liquid-glass pills: tracks the pointer so the specular highlight follows it */
+(function glassPills(){
+  if(!window.matchMedia||!matchMedia('(hover:hover)').matches) return;
+  var els=[].slice.call(document.querySelectorAll('.tag,.btn,.who-btn,.rail-toggle,.topbar-menu-btn,.mnav-close'));
+  els.forEach(function(e){
+    e.classList.add('glass');
+    e.addEventListener('pointermove',function(ev){var r=e.getBoundingClientRect();e.style.setProperty('--mx',((ev.clientX-r.left)/r.width*100)+'%');e.style.setProperty('--my',((ev.clientY-r.top)/r.height*100)+'%');});
+  });
+})();
+
+/* Liquid-glass cards: a soft light and a glass lens follow the pointer inside the card */
+(function glassCards(){
+  if(!window.matchMedia||!matchMedia('(hover:hover)').matches) return;
+  var sel='.proof-card,.what-card,.svc-link,.who-track li,.results-grid > *';
+  [].slice.call(document.querySelectorAll(sel)).forEach(function(c){
+    c.classList.add('gl');
+    var g=document.createElement('i');g.className='gl-glow';g.setAttribute('aria-hidden','true');
+    c.appendChild(g);
+    var tx=0,ty=0,x=0,y=0,raf=0;
+    function tick(){x+=(tx-x)*.18;y+=(ty-y)*.18;c.style.setProperty('--gx',(x-260)+'px');c.style.setProperty('--gy',(y-260)+'px');
+      if(Math.abs(tx-x)>.3||Math.abs(ty-y)>.3)raf=requestAnimationFrame(tick);else raf=0;}
+    c.addEventListener('pointerenter',function(e){var r=c.getBoundingClientRect();x=tx=e.clientX-r.left;y=ty=e.clientY-r.top;tick();});
+    c.addEventListener('pointermove',function(e){var r=c.getBoundingClientRect();tx=e.clientX-r.left;ty=e.clientY-r.top;if(!raf)raf=requestAnimationFrame(tick);});
+  });
+})();
