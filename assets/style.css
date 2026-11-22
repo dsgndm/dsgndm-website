@@ -1343,11 +1343,21 @@ footer.site-footer{ display:block; padding:clamp(40px,6vw,72px) var(--edge) 28px
 .results-grid{ gap:12px; background:none; overflow:visible; } .results-grid > *{ border-radius:var(--r-card); }
 .proof-card:hover,.proof-card:focus-within,.svc-link:hover,.what-card:hover,.who-track li:hover{ border:0; }
 .gl{ position:relative; isolation:isolate; overflow:hidden; transition:transform .7s cubic-bezier(.22,1,.36,1), box-shadow .6s ease; }
-.gl-glow{ position:absolute; left:0; top:0; pointer-events:none; border-radius:50%; opacity:0; }
-.gl-glow{ width:520px; height:520px; z-index:-1; background:radial-gradient(closest-side, rgba(30,51,255,.13), rgba(30,51,255,.05) 55%, transparent); transition:opacity .6s ease; transform:translate3d(var(--gx,0px),var(--gy,0px),0); }
 @media (hover:hover){
   .gl:hover{ transform:translateY(-4px); box-shadow:0 22px 44px -22px rgba(31,34,54,.28), 0 2px 6px rgba(31,34,54,.05); }
-  .gl:hover .gl-glow{ opacity:1; }
 }
-@media (hover:none){ .gl-glow{ display:none; } }
 @media (prefers-reduced-motion:reduce){ .gl:hover{ transform:none; } }
+
+/* ---- Pills v3: flat colour on hover, no gradient layer ---- */
+.glass::before{ display:none; }
+@media (hover:hover){
+  .glass:hover:not(:disabled){ box-shadow:0 10px 22px -10px rgba(31,34,54,.3); -webkit-backdrop-filter:none; backdrop-filter:none; }
+  .tag.glass:hover{ background:rgba(30,51,255,.1); color:var(--volt); }
+  .btn-primary.glass:hover{ background:var(--volt); color:#fff; }
+  .btn-ghost.glass:hover{ background:var(--ink); color:#fff; }
+  .who-btn.glass:hover:not(:disabled){ background:var(--ink); } .who-btn.glass:hover:not(:disabled) svg{ stroke:#fff; }
+  .rail-toggle.glass:hover,.topbar-menu-btn.glass:hover,.mnav-close.glass:hover{ background:rgba(31,34,54,.14); }
+}
+
+.case-nav .nav-cta{ border-radius:var(--r-pill); transition:background .3s ease, transform .5s cubic-bezier(.34,1.56,.64,1), box-shadow .4s ease; }
+@media (hover:hover){ .case-nav .nav-cta:hover{ transform:translateY(-2px) scale(1.05); box-shadow:0 10px 22px -10px rgba(31,34,54,.3); } .case-nav .nav-cta:active{ transform:scale(.97); transition-duration:.15s; } }

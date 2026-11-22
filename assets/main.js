@@ -847,18 +847,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 })();
 
-/* Liquid-glass cards: a soft light and a glass lens follow the pointer inside the card */
+/* Cards: soft lift on hover (shadow and motion live in CSS) */
 (function glassCards(){
-  if(!window.matchMedia||!matchMedia('(hover:hover)').matches) return;
-  var sel='.proof-card,.what-card,.svc-link,.who-track li,.results-grid > *';
-  [].slice.call(document.querySelectorAll(sel)).forEach(function(c){
-    c.classList.add('gl');
-    var g=document.createElement('i');g.className='gl-glow';g.setAttribute('aria-hidden','true');
-    c.appendChild(g);
-    var tx=0,ty=0,x=0,y=0,raf=0;
-    function tick(){x+=(tx-x)*.18;y+=(ty-y)*.18;c.style.setProperty('--gx',(x-260)+'px');c.style.setProperty('--gy',(y-260)+'px');
-      if(Math.abs(tx-x)>.3||Math.abs(ty-y)>.3)raf=requestAnimationFrame(tick);else raf=0;}
-    c.addEventListener('pointerenter',function(e){var r=c.getBoundingClientRect();x=tx=e.clientX-r.left;y=ty=e.clientY-r.top;tick();});
-    c.addEventListener('pointermove',function(e){var r=c.getBoundingClientRect();tx=e.clientX-r.left;ty=e.clientY-r.top;if(!raf)raf=requestAnimationFrame(tick);});
-  });
+  [].slice.call(document.querySelectorAll('.proof-card,.what-card,.svc-link,.who-track li,.results-grid > *')).forEach(function(c){c.classList.add('gl');});
 })();
