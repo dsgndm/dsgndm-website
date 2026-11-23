@@ -851,3 +851,104 @@ document.addEventListener('DOMContentLoaded', () => {
 (function glassCards(){
   [].slice.call(document.querySelectorAll('.proof-card,.what-card,.svc-link,.who-track li,.results-grid > *')).forEach(function(c){c.classList.add('gl');});
 })();
+
+/* Home impact moments */
+(function homeImpact(){
+  var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
+  /* 1. reactive headings: letters settle from light/wide to bold on entering */
+  var hs=[].slice.call(document.querySelectorAll('#work h2,#about h2,#skills h2,#proof h2,#contact h2'));
+  function split(h){
+    var n=0;h.setAttribute('aria-label',h.textContent.replace(/\s+/g,' ').trim());
+    (function walk(node){
+      [].slice.call(node.childNodes).forEach(function(ch){
+        if(ch.nodeType===3){
+          var frag=document.createDocumentFragment();
+          ch.textContent.split(/(\s+)/).forEach(function(tok){
+            if(!tok)return;
+            if(/^\s+$/.test(tok)){frag.appendChild(document.createTextNode(' '));return;}
+            var w=document.createElement('span');w.className='w';w.setAttribute('aria-hidden','true');
+            tok.split('').forEach(function(c){var s=document.createElement('span');s.className='c';s.textContent=c;s.style.setProperty('--i',n++);w.appendChild(s);});
+            frag.appendChild(w);
+          });
+          node.replaceChild(frag,ch);
+        }else if(ch.nodeType===1&&ch.tagName!=='BR'&&!ch.classList.contains('w'))walk(ch);
+      });
+    })(h);
+    h.classList.add('hx');
+  }
+  if(!rm&&'IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.35});
+    hs.forEach(function(h){split(h);io.observe(h);});
+  }
+  /* 2. statement band: scroll drives speed, direction and width */
+  var box=document.querySelector('.mq-box');
+  if(box&&!rm){
+    var rows=[].slice.call(box.querySelectorAll('.mq-row')).map(function(r){var t=r.querySelector('.mq-track');t.innerHTML+=t.innerHTML;return {t:t,d:+r.dataset.dir,x:0};});
+    var last=scrollY,vel=0,vis=false;
+    new IntersectionObserver(function(e){vis=e[0].isIntersecting;},{rootMargin:'100px'}).observe(box);
+    (function loop(){
+      requestAnimationFrame(loop);
+      var y=scrollY;vel+=((y-last)-vel)*.15;last=y;
+      if(!vis)return;
+      var r=box.getBoundingClientRect(),p=Math.min(1,Math.max(0,1-(r.top+r.height/2)/innerHeight));
+      rows.forEach(function(o,i){
+        o.t.style.setProperty('--mw',(i?125-p*50:75+p*50).toFixed(1));
+        var half=o.t.scrollWidth/2||1;
+        o.x+=o.d*(.6+Math.abs(vel)*.35)*(vel<0?-1:1)*(vel===0?1:1);
+        if(o.x<=-half)o.x+=half;if(o.x>=0&&o.d>0)o.x-=half;if(o.d<0&&o.x>0)o.x-=half;
+        o.t.style.transform='translate3d('+o.x+'px,0,0)';
+      });
+    })();
+  }
+  /* 3. giant "Let's talk": letters react to the pointer, a cursor wanders when idle */
+  var bt=document.querySelector('.bt-t');
+  if(bt&&!rm){
+    var txt=bt.textContent;bt.textContent='';
+    var cs=txt.split('').map(function(c){var s=document.createElement('span');s.className='c';s.textContent=c===' '?' ':c;bt.appendChild(s);return {el:s,w:800,x:100};});
+    function fit(){bt.style.fontSize='100px';bt.style.letterSpacing='-.03em';cs.forEach(function(c){c.el.style.fontVariationSettings='"wght" 800,"wdth" 112';});var w=0;cs.forEach(function(c){w+=c.el.getBoundingClientRect().width;});var W=bt.clientWidth;bt.style.fontSize=Math.max(40,Math.floor(100*W/w*.97))+'px';}
+    fit();addEventListener('resize',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+    var wrap=document.querySelector('.big-talk'),cur=wrap.querySelector('.bt-cur'),P=null,vis2=false,t0=0;
+    wrap.addEventListener('pointermove',function(e){var r=wrap.getBoundingClientRect();P=[e.clientX-r.left,e.clientY-r.top];clearTimeout(wrap._t);wrap._t=setTimeout(function(){P=null;},2000);});
+    wrap.addEventListener('pointerleave',function(){P=null;});
+    new IntersectionObserver(function(e){vis2=e[0].isIntersecting;if(vis2)t0=performance.now();},{threshold:.3}).observe(wrap);
+    var ease=function(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2};
+    (function loop(now){
+      requestAnimationFrame(loop);if(!vis2)return;
+      var r=wrap.getBoundingClientRect(),W=r.width,Hh=r.height,t=((now-t0)/1000)%12,pt=P;
+      /* idle cursor path: eased sweep across letters */
+      var wps=[[0,.05,.7],[2.2,.3,.4],[4.5,.62,.6],[7,.9,.35],[9.5,.55,.8],[12,.05,.7]],pp=null;
+      for(var k=0;k<wps.length-1;k++){if(t>=wps[k][0]&&t<wps[k+1][0]){var u=ease((t-wps[k][0])/(wps[k+1][0]-wps[k][0])),A=wps[k],B=wps[k+1],dx=(B[1]-A[1])*W,dy=(B[2]-A[2])*Hh,cx=(A[1]+B[1])/2*W-dy*.2,cy=(A[2]+B[2])/2*Hh+dx*.08;
+        var ax=A[1]*W,ay=A[2]*Hh,bx=B[1]*W,by=B[2]*Hh;pp=[(1-u)*(1-u)*ax+2*(1-u)*u*cx+u*u*bx,(1-u)*(1-u)*ay+2*(1-u)*u*cy+u*u*by];break;}}
+      var p=pt||pp;
+      if(pp&&!pt){cur.classList.add('on');cur.style.transform='translate3d('+pp[0]+'px,'+pp[1]+'px,0)';}else cur.classList.remove('on');
+      cs.forEach(function(c){var b=c.el.getBoundingClientRect(),cx=b.left-r.left+b.width/2,cy=b.top-r.top+b.height/2,kk=0;
+        if(p){var d=Math.hypot(p[0]-cx,(p[1]-cy)*.7);kk=Math.max(0,1-d/(W*.16));}
+        var tw=800+100*kk*(1),tx=100+25*kk;if(kk===0){tw=600;tx=96;}else{tw=620+280*kk;}
+        c.w+=(tw-c.w)*.12;c.x+=(tx-c.x)*.12;c.el.style.fontVariationSettings='"wght" '+c.w.toFixed(0)+',"wdth" '+c.x.toFixed(1);});
+    })(performance.now());
+  }
+})();
+
+/* More work accordion */
+(function(){
+  var st=[].slice.call(document.querySelectorAll('.acc .st')),inf=[].slice.call(document.querySelectorAll('.infs .inf'));
+  if(!st.length)return;
+  function on(i){st.forEach(function(e,k){e.classList.toggle('on',k==i);});inf.forEach(function(e,k){e.classList.toggle('on',k==i);});}
+  st.forEach(function(e,i){
+    e.addEventListener('mouseenter',function(){on(i);});
+    e.addEventListener('focus',function(){on(i);});
+    e.addEventListener('click',function(ev){if(!e.classList.contains('on')&&matchMedia('(hover:none)').matches){ev.preventDefault();on(i);}});
+  });
+})();
+
+/* Selected work vertical accordion */
+(function(){
+  var vr=[].slice.call(document.querySelectorAll('.vl .vr'));
+  if(!vr.length)return;
+  function on(i){vr.forEach(function(e,k){e.classList.toggle('on',k==i);});}
+  vr.forEach(function(e,i){
+    e.addEventListener('mouseenter',function(){on(i);});
+    e.addEventListener('focus',function(){on(i);});
+    e.addEventListener('click',function(ev){if(!e.classList.contains('on')){ev.preventDefault();on(i);}});
+  });
+})();
