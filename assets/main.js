@@ -949,19 +949,19 @@ document.addEventListener('DOMContentLoaded', () => {
   vr.forEach(function(e,i){
     hoverIntent(e,function(){on(i);});
     e.addEventListener('focus',function(){on(i);});
-    e.addEventListener('click',function(ev){if(!e.classList.contains('on')){ev.preventDefault();on(i);}});
+    e.addEventListener('click',function(ev){if(!e.classList.contains('on')&&matchMedia('(hover:none)').matches){ev.preventDefault();on(i);}});
   });
 })();
 
 
-/* Hover intent for accordions: opens only when the mouse really moves and rests ~140ms on the item,
+/* Hover intent for accordions: opens only when the mouse really moves and rests ~45ms on the item,
    so layout shifts caused by the animation itself never trigger new openings. */
 function hoverIntent(el,fn){
   var t=null;
   el.addEventListener('pointermove',function(e){
     if(e.pointerType&&e.pointerType!=='mouse')return;
     if(el.classList.contains('on')){clearTimeout(t);return;}
-    clearTimeout(t);t=setTimeout(fn,140);
+    clearTimeout(t);t=setTimeout(fn,45);
   });
   el.addEventListener('pointerleave',function(){clearTimeout(t);});
 }

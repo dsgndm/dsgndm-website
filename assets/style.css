@@ -1499,3 +1499,11 @@ footer.site-footer{ display:block; padding:clamp(40px,6vw,72px) var(--edge) 28px
 .vr:not(.on):hover{ background:rgba(31,34,54,.08); }
 .vr .go{ background:rgba(31,34,54,.08); }
 .vi{ box-shadow:0 14px 32px -16px rgba(31,34,54,.35), 0 0 0 1px rgba(31,34,54,.04); }
+
+/* Snappier response: content follows the opening almost immediately */
+.vr{ transition:height .7s cubic-bezier(.4,0,.2,1), background .4s ease, color .4s ease; }
+.vr.on .vb{ transition:opacity .4s ease .1s, transform .6s cubic-bezier(.22,1,.36,1) .06s; }
+.st{ transition:flex .7s cubic-bezier(.4,0,.2,1); }
+.inf.on{ transition:opacity .4s ease .08s, transform .6s cubic-bezier(.22,1,.36,1) .06s; }
+.inf{ transition:opacity .15s ease, transform .2s ease, visibility 0s .15s; }
+@media (max-width:800px){ .st{ transition:height .6s cubic-bezier(.4,0,.2,1); } }
