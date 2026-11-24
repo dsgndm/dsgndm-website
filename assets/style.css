@@ -1507,3 +1507,25 @@ footer.site-footer{ display:block; padding:clamp(40px,6vw,72px) var(--edge) 28px
 .inf.on{ transition:opacity .4s ease .08s, transform .6s cubic-bezier(.22,1,.36,1) .06s; }
 .inf{ transition:opacity .15s ease, transform .2s ease, visibility 0s .15s; }
 @media (max-width:800px){ .st{ transition:height .6s cubic-bezier(.4,0,.2,1); } }
+
+/* Mobile / touch: no accordion — every item is a direct link (one tap goes to the case) */
+@media (max-width:800px){
+  .vl{ height:auto; }
+  .vr,.vr.on{ height:auto; background:#fff; box-shadow:0 14px 30px -22px rgba(31,34,54,.3); transition:none; }
+  .vh{ height:auto; min-height:0; }
+  .vh h3,.vr.on .vh h3{ font-variation-settings:"wght" 800,"wdth" 100; }
+  .vr.on .go{ background:rgba(31,34,54,.08); color:var(--ink); transform:none; }
+  .vb,.vr.on .vb{ opacity:1; transform:none; transition:none; }
+  .vb > div{ height:auto; grid-template-rows:auto auto; padding-bottom:20px; }
+  .vi{ height:auto; aspect-ratio:3/2; }
+  .vr.on .vt .btn-primary,.vr .vt .btn-primary{ background:var(--ink); color:#fff; }
+  .st,.st.on{ flex:none; height:84px; transition:none; }
+  .st img,.st.on img{ filter:none; mix-blend-mode:normal; opacity:.55; }
+  .st .nm,.st.on .nm{ opacity:1; }
+  .infs{ display:none; }
+}
+@media (max-width:800px){
+  .vb > div{ padding-bottom:22px !important; }
+  .st img,.st.on img{ opacity:.38; }
+}
+

@@ -937,7 +937,7 @@ document.addEventListener('DOMContentLoaded', () => {
   st.forEach(function(e,i){
     hoverIntent(e,function(){on(i);});
     e.addEventListener('focus',function(){on(i);});
-    e.addEventListener('click',function(ev){if(!e.classList.contains('on')&&matchMedia('(hover:none)').matches){ev.preventDefault();on(i);}});
+    
   });
 })();
 
@@ -949,7 +949,7 @@ document.addEventListener('DOMContentLoaded', () => {
   vr.forEach(function(e,i){
     hoverIntent(e,function(){on(i);});
     e.addEventListener('focus',function(){on(i);});
-    e.addEventListener('click',function(ev){if(!e.classList.contains('on')&&matchMedia('(hover:none)').matches){ev.preventDefault();on(i);}});
+    
   });
 })();
 
