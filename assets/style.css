@@ -1457,3 +1457,45 @@ footer.site-footer{ display:block; padding:clamp(40px,6vw,72px) var(--edge) 28px
 .acc{ height:clamp(240px,24vw,320px); } .i1 h3{ font-size:clamp(26px,3vw,44px); }
 @media (max-width:800px){ .vm{ display:none; } .vh{ justify-content:space-between; } .vb > div{ grid-template-columns:1fr; } .acc{ height:auto; } }
 @media (prefers-reduced-motion:reduce){ .vr,.vb,.vh h3,.vr .go{ transition:none; } }
+
+/* Smooth accordions: fixed total height (nothing below shifts), gentle easing, staggered content */
+.vl{ --hh:calc(max(48px, clamp(34px,6vw,100px)*.95) + 2*clamp(18px,2.4vw,32px)); --bh:clamp(220px,27vw,400px); --pb:clamp(20px,2.6vw,36px);
+  display:flex; flex-direction:column; gap:12px; height:calc(3*var(--hh) + 24px + var(--bh) + var(--pb)); }
+.vr{ flex:none; height:var(--hh); transition:height .8s cubic-bezier(.45,0,.2,1), background .6s ease, color .6s ease; }
+.vr.on{ height:calc(var(--hh) + var(--bh) + var(--pb)); }
+.vh{ box-sizing:border-box; height:var(--hh); }
+.vb{ display:block; opacity:0; transform:translateY(14px); transition:opacity .25s ease, transform .25s ease; }
+.vr.on .vb{ opacity:1; transform:none; transition:opacity .55s ease .28s, transform .7s cubic-bezier(.22,1,.36,1) .22s; }
+.vb > div{ display:grid; grid-template-columns:1.6fr 1fr; height:var(--bh); padding-bottom:0 !important; overflow:visible; }
+.vi{ height:100%; aspect-ratio:auto; }
+.vh h3{ transition:font-variation-settings .8s cubic-bezier(.45,0,.2,1); }
+.vr .go{ transition:transform .8s cubic-bezier(.45,0,.2,1), background .5s ease, color .5s ease; }
+@media (max-width:800px){ .vl{ --bh:480px; } .vb > div{ grid-template-columns:1fr; grid-template-rows:180px 1fr; } .vi{ height:180px; } }
+
+.st{ transition:flex .85s cubic-bezier(.45,0,.2,1); }
+.st img{ transition:opacity .7s ease, filter .7s ease; }
+.st .nm{ transition:opacity .45s ease; }
+.inf{ transition:opacity .25s ease, transform .3s ease, visibility 0s .25s; }
+.inf.on{ transition:opacity .5s ease .2s, transform .7s cubic-bezier(.22,1,.36,1) .2s; }
+@media (max-width:800px){ .st{ transition:height .7s cubic-bezier(.45,0,.2,1); } }
+@media (prefers-reduced-motion:reduce){ .vr,.vb,.st,.inf{ transition:none !important; } }
+
+/* Vertical accordion: lighter open state */
+.vr.on{ background:#E3E7FF; color:var(--ink); }
+.vt li{ background:rgba(30,51,255,.1); color:var(--volt); }
+.vr.on .vt .btn-primary{ background:var(--ink); color:#fff; }
+.vr.on:hover .vt .btn-primary{ background:var(--volt); color:#fff; }
+.vr.on .vm{ opacity:.75; }
+
+/* Horizontal accordion: taller, image keeps a fixed size (revealed like a mask, never rescaled) */
+@media (min-width:801px){
+  .acc{ container-type:inline-size; height:auto; aspect-ratio:3; }
+  .st img{ width:calc((100cqw - 48px) * .5556); max-width:none; height:100%; left:0; right:auto; }
+}
+
+/* Vertical accordion: fully light — closed rows sit as soft tint, the open row lifts as white */
+.vr{ background:rgba(31,34,54,.05); }
+.vr.on{ background:#fff; box-shadow:0 24px 48px -26px rgba(31,34,54,.3), 0 2px 6px rgba(31,34,54,.05); }
+.vr:not(.on):hover{ background:rgba(31,34,54,.08); }
+.vr .go{ background:rgba(31,34,54,.08); }
+.vi{ box-shadow:0 14px 32px -16px rgba(31,34,54,.35), 0 0 0 1px rgba(31,34,54,.04); }

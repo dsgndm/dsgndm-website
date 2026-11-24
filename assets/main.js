@@ -935,7 +935,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(!st.length)return;
   function on(i){st.forEach(function(e,k){e.classList.toggle('on',k==i);});inf.forEach(function(e,k){e.classList.toggle('on',k==i);});}
   st.forEach(function(e,i){
-    e.addEventListener('mouseenter',function(){on(i);});
+    hoverIntent(e,function(){on(i);});
     e.addEventListener('focus',function(){on(i);});
     e.addEventListener('click',function(ev){if(!e.classList.contains('on')&&matchMedia('(hover:none)').matches){ev.preventDefault();on(i);}});
   });
@@ -947,8 +947,21 @@ document.addEventListener('DOMContentLoaded', () => {
   if(!vr.length)return;
   function on(i){vr.forEach(function(e,k){e.classList.toggle('on',k==i);});}
   vr.forEach(function(e,i){
-    e.addEventListener('mouseenter',function(){on(i);});
+    hoverIntent(e,function(){on(i);});
     e.addEventListener('focus',function(){on(i);});
     e.addEventListener('click',function(ev){if(!e.classList.contains('on')){ev.preventDefault();on(i);}});
   });
 })();
+
+
+/* Hover intent for accordions: opens only when the mouse really moves and rests ~140ms on the item,
+   so layout shifts caused by the animation itself never trigger new openings. */
+function hoverIntent(el,fn){
+  var t=null;
+  el.addEventListener('pointermove',function(e){
+    if(e.pointerType&&e.pointerType!=='mouse')return;
+    if(el.classList.contains('on')){clearTimeout(t);return;}
+    clearTimeout(t);t=setTimeout(fn,140);
+  });
+  el.addEventListener('pointerleave',function(){clearTimeout(t);});
+}
