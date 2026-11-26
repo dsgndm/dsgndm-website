@@ -856,7 +856,7 @@ document.addEventListener('DOMContentLoaded', () => {
 (function homeImpact(){
   var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
   /* 1. reactive headings: letters settle from light/wide to bold on entering */
-  var hs=[].slice.call(document.querySelectorAll('#work h2,#about h2,#skills h2,#proof h2,#contact h2'));
+  var hs=[].slice.call(document.querySelectorAll('#work h2,#about h2,#skills h2,#proof h2,#contact h2,.case-h,.flag-text h2'));
   function split(h){
     var n=0;h.setAttribute('aria-label',h.textContent.replace(/\s+/g,' ').trim());
     (function walk(node){

@@ -1750,5 +1750,27 @@ html[data-theme="dark"] body:not([class*="theme-"]) .vr.on .go{ background:var(-
 .theme-ayucell .flag-fig-media{ background:#CBE0DC; }
 .theme-ayucell .flag-band p{ color:#2B7A78; }
 .theme-ayucell .result-card{ background:#1F5F5D; color:#fff; } .theme-ayucell .result-card span{ color:rgba(255,255,255,.92); }
-.theme-ayucell .result-card:nth-child(2){ background:#26706E; } .theme-ayucell .result-card:nth-child(3){ background:#6E5F34; }
+
 .theme-ayucell .results-grid{ gap:0; }
+
+/* ===== Case pages, home's typographic system ===== */
+.case-h{ font-size:clamp(2rem,4vw,3.4rem); line-height:1.02; letter-spacing:-.025em; margin-top:14px; max-width:14ch; text-wrap:balance; }
+.case-2col{ grid-template-columns:1.1fr 1fr; align-items:start; }
+.case-2col .body-text, .case-section .body-text{ font-size:clamp(1.05rem,1.3vw,1.2rem); line-height:1.7; }
+.case-section{ padding-top:clamp(64px,9vw,120px); padding-bottom:clamp(64px,9vw,120px); }
+.flag-text h2{ font-size:clamp(2rem,4vw,3.4rem); line-height:1.02; max-width:14ch; }
+.flag-text .eyebrow, .case-section .eyebrow, .case-hero .eyebrow{ color:var(--volt); }
+.theme-whizzle .eyebrow{ color:#fff; }
+.case-hero h1{ font-size:clamp(3.4rem,10vw,8.6rem); line-height:.92; letter-spacing:-.04em; }
+.case-hero .lede{ font-size:clamp(1.15rem,1.7vw,1.5rem); max-width:44ch; }
+/* meta row and results read like the home stat strip */
+.case-meta-row{ border-top:1px solid var(--line); gap:0; padding-top:0; }
+.case-meta-row > div{ padding:22px 20px 0 0; position:relative; }
+.case-meta-row > div:before{ content:""; position:absolute; left:0; top:-1px; width:28px; height:2px; background:var(--volt); }
+.case-meta-row div b{ font-size:clamp(1.15rem,1.8vw,1.55rem); line-height:1.15; }
+.results-grid{ border:0; gap:0; background:none; border-top:1px solid var(--line); }
+.results-grid .result-card, .theme-whizzle .result-card, .theme-ayucell .result-card{ background:none !important; border-radius:0; padding:26px 24px 0 0; position:relative; color:var(--ink); }
+.result-card:before{ content:""; position:absolute; left:0; top:-1px; width:28px; height:2px; background:var(--volt); }
+.result-card b{ font-size:clamp(2.6rem,5.2vw,4.6rem); line-height:1; letter-spacing:-.03em; }
+.theme-ayucell .result-card span{ color:var(--muted); }
+.theme-ayucell .result-card b{ color:var(--ink); }
