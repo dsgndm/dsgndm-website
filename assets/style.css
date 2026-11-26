@@ -689,7 +689,7 @@ footer.site-footer a:hover{ color: var(--volt); }
 .mnav-list a:hover{ color: var(--volt); }
 
 
-/* ================= FLAGSHIP CASE LAYOUT — full-bleed images (Whizzle, KWS, Ayucell) ================= */
+/* ================= FLAGSHIP CASE LAYOUT — full-bleed images (Whizzle, Ayucell) ================= */
 .flag-wrap{ padding-bottom: clamp(56px,7vw,96px); border-bottom:1px solid var(--line); }
 .flag-step{ padding-top: clamp(64px,9vw,128px); }
 .flag-text{
@@ -742,7 +742,6 @@ footer.site-footer a:hover{ color: var(--volt); }
   --ink:#FFFFFF; --ink-70:rgba(255,255,255,.92); --muted:rgba(255,255,255,.88);
   --volt:#FFFFFF; --volt-10:rgba(255,255,255,.12); --volt-20:rgba(255,255,255,.20); --on-volt:#5B49F6;
 }
-.theme-kws{ --paper:#E7E7E7; --paper-alt:#DCDCDC; --card:#F2F2F2; --line:#CDCDCD; --line-soft:#D8D8D8; --muted:#5F6173; }
 .theme-ayucell{ --paper:#F4F4F2; --paper-alt:#EAEAE6; --card:#FFFFFF; --line:#D9D9D4; --line-soft:#E4E4E0; --muted:#62647A; }
 .theme-siroko{
   --paper:#000000; --paper-alt:#111111; --card:#0D0D0D; --line:#2B2B2B; --line-soft:#1C1C1C;
