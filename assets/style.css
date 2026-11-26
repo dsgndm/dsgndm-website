@@ -1679,3 +1679,48 @@ html[data-theme="dark"] .rail .tt-knob{ transform:translateY(20px); }
 .proof-more[data-closing] .t-less{ display:none; }
 .proof-more[data-closing] .t-more{ display:inline; }
 .proof-more summary:hover::before{ background:var(--volt); color:var(--on-volt,#fff); }
+
+/* ---- dark mode: contrast fixes ---- */
+html[data-theme="dark"] body:not([class*="theme-"]){ --ink-70:#B9BCD0; --ink-2:#B9BCD0; --volt-fill:#2B3FFF; }
+html[data-theme="dark"] body:not([class*="theme-"]) .sec-blue,
+html[data-theme="dark"] body:not([class*="theme-"]) .sec-blue .case-section-inner{ background:var(--volt-fill); }
+html[data-theme="dark"] body:not([class*="theme-"]) .case-nav .nav-cta,
+html[data-theme="dark"] body:not([class*="theme-"]) .me > .fig-nm{ background:var(--volt-fill); }
+html[data-theme="dark"] body:not([class*="theme-"]) .case-nav .nav-cta:hover{ background:var(--ink-fill); }
+/* illustrations that draw their own white UI keep the light palette */
+html[data-theme="dark"] body:not([class*="theme-"]) .vz,
+html[data-theme="dark"] body:not([class*="theme-"]) .ia{ --ink:#1F2236; --ink-70:#4A4D63; --muted:#5F6173; --paper:#F5F5F2; --paper-alt:#ECECE7; --card:#fff; --line:#DBDBD6; --volt:#1E33FF; --ink-fill:#1F2236; --on-ink:#fff; color:#1F2236; }
+html[data-theme="dark"] body:not([class*="theme-"]) .sec-cta .btn-primary,
+html[data-theme="dark"] body:not([class*="theme-"]) .svc-cta .btn-primary{ background:var(--volt-fill); border-color:var(--volt-fill); color:#fff; }
+html[data-theme="dark"] body:not([class*="theme-"]) .who-track li:last-child,
+html[data-theme="dark"] body:not([class*="theme-"]) .why-col.why-cta,
+html[data-theme="dark"] body:not([class*="theme-"]) .hero-sel-label,
+html[data-theme="dark"] body:not([class*="theme-"]) .fig-tool.on,
+html[data-theme="dark"] body:not([class*="theme-"]) .fig-share,
+html[data-theme="dark"] body:not([class*="theme-"]) .fc-btn,
+html[data-theme="dark"] body:not([class*="theme-"]) .fig-size,
+html[data-theme="dark"] body:not([class*="theme-"]) .fig-menu span,
+html[data-theme="dark"] body:not([class*="theme-"]) .ia-sel span,
+html[data-theme="dark"] body:not([class*="theme-"]) .vr.on .go{ background:var(--volt-fill); border-color:var(--volt-fill); color:#fff; }
+
+/* ---- copy button (contact) ---- */
+.copy-btn{ position:absolute; right:150px; width:28px; height:28px; display:grid; place-items:center; padding:0; border:1px solid var(--line); border-radius:50%; background:var(--card); color:var(--muted); cursor:pointer; z-index:2; transition:color .25s, border-color .25s, background .25s; }
+.copy-btn:hover, .copy-btn:focus-visible{ color:var(--volt); border-color:var(--volt); outline:none; }
+.copy-btn svg{ width:14px; height:14px; }
+.copy-btn .copy-tip{ position:absolute; right:calc(100% + 8px); top:50%; transform:translateY(-50%) translateX(6px); opacity:0; pointer-events:none; white-space:nowrap; font:500 11px/1 var(--font-mono); letter-spacing:.06em; text-transform:uppercase; color:var(--volt); transition:opacity .25s, transform .35s cubic-bezier(.22,1,.36,1); }
+.copy-btn.shown .copy-tip{ opacity:1; transform:translateY(-50%); }
+.copy-btn.ok{ background:var(--ink-fill); color:var(--on-ink); border-color:var(--ink-fill); }
+@media (max-width:560px){ .copy-btn{ right:136px; } .copy-btn .copy-tip{ right:0; top:calc(100% + 10px); transform:translateY(-4px); } .copy-btn.shown .copy-tip{ transform:none; } }
+
+/* ---- case pages: progress + back to top ---- */
+.read-progress{ position:fixed; left:0; top:0; width:100%; height:3px; background:var(--ink); transform-origin:0 50%; transform:scaleX(0); z-index:80; pointer-events:none; }
+.to-top{ position:fixed; right:max(16px, env(safe-area-inset-right, 0px)); bottom:max(16px, env(safe-area-inset-bottom, 0px)); width:46px; height:46px; display:grid; place-items:center; padding:0; border-radius:50%; border:1px solid var(--line); background:var(--card); color:var(--ink); cursor:pointer; z-index:70; opacity:0; transform:translateY(12px) scale(.9); pointer-events:none; transition:opacity .3s ease, transform .45s cubic-bezier(.34,1.56,.64,1), background .25s, color .25s; box-shadow:0 8px 20px -10px rgba(0,0,0,.3); }
+.to-top.show{ opacity:1; transform:none; pointer-events:auto; }
+.to-top:hover, .to-top:focus-visible{ background:var(--ink-fill); color:var(--on-ink); outline:none; }
+.to-top svg{ width:16px; height:16px; }
+@media (prefers-reduced-motion:reduce){ .to-top{ transition:opacity .2s; transform:none; } }
+
+/* ---- case video (hidden until a page uses it) ---- */
+.case-video{ margin:clamp(24px,3vw,40px) 0 0; border-radius:var(--r-card); overflow:hidden; border:1px solid var(--line); background:var(--card); }
+.case-video video{ display:block; width:100%; height:auto; background:var(--paper-alt, var(--card)); }
+.case-video figcaption{ padding:12px 16px; font:400 12px/1.5 var(--font-mono); color:var(--muted); border-top:1px solid var(--line); }
