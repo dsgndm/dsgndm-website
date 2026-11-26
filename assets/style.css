@@ -1608,4 +1608,6 @@ html[data-theme="dark"] body:not([class*="theme-"]) .topbar-menu-btn.glass:hover
 html[data-theme="dark"] body:not([class*="theme-"]) .mnav-close.glass:hover,
 html[data-theme="dark"] body:not([class*="theme-"]) .rail-toggle.glass:hover{ background:rgba(255,255,255,.1); }
 html[data-theme="dark"] body:not([class*="theme-"]) .lg-fill{ fill:#fff; }
-html[data-theme="dark"] body:not([class*="theme-"]) .about-photo img{ filter:brightness(0) invert(.94); }
+.about-photo .ph-d{ display:none; }
+html[data-theme="dark"] body:not([class*="theme-"]) .about-photo .ph-l{ display:none; }
+html[data-theme="dark"] body:not([class*="theme-"]) .about-photo .ph-d{ display:block; }
