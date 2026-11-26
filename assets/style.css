@@ -1664,3 +1664,18 @@ html[data-theme="dark"] body:not([class*="theme-"]) .stat:hover{ background:rgba
 #work.section{ padding-top:clamp(44px,5vw,80px); }
 
 .hero.section{ padding-bottom:0; }
+
+/* ---- vertical theme switch in the side rail ---- */
+.rail .tt-track{ width:26px; height:46px; }
+.rail .tt-knob{ top:2px; left:2px; }
+html[data-theme="dark"] .rail .tt-knob{ transform:translateY(20px); }
+
+/* ---- testimonials: animated read more ---- */
+.proof-more .pm-body{ will-change:height; }
+.proof-more .pm-body p{ margin-top:12px; animation:none; }
+.proof-more summary::before{ transition:transform .45s cubic-bezier(.34,1.45,.5,1), background .25s, color .25s; }
+.proof-more[open] summary::before{ transform:rotate(180deg); }
+.proof-more[data-closing] summary::before{ content:"+"; transform:none; }
+.proof-more[data-closing] .t-less{ display:none; }
+.proof-more[data-closing] .t-more{ display:inline; }
+.proof-more summary:hover::before{ background:var(--volt); color:var(--on-volt,#fff); }
