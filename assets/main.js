@@ -437,10 +437,10 @@ document.addEventListener('DOMContentLoaded', () => {
         duration: 1.6,
         ease: 'power2.out',
         scrollTrigger: { trigger: el, start: 'top 92%', once: true },
-        onUpdate: () => { el.textContent = obj.val.toFixed(decimals) + suffix; }
+        onUpdate: () => { el.innerHTML = obj.val.toFixed(decimals) + (suffix ? '<i>'+suffix+'</i>' : ''); }
       });
     } else {
-      el.textContent = target.toFixed(decimals) + suffix;
+      el.innerHTML = target.toFixed(decimals) + (suffix ? '<i>'+suffix+'</i>' : '');
     }
   });
 
@@ -975,29 +975,39 @@ function hoverIntent(el,fn){
 })();
 
 
-/* Theme toggle */
+/* Theme switch: persists the choice, follows the OS until the visitor picks, and reveals the new theme as a circle from the switch */
 (function(){
   var root=document.documentElement;
-  /* follow the OS theme live, unless the visitor chose one with the button */
+  var reduceT=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function isDark(){ return root.getAttribute('data-theme')==='dark'; }
+  function sync(){ [].forEach.call(document.querySelectorAll('.theme-toggle'),function(b){ b.setAttribute('aria-checked',isDark()?'true':'false'); }); document.dispatchEvent(new Event('themechange')); }
   try{
     var mq=matchMedia('(prefers-color-scheme: dark)');
     mq.addEventListener('change',function(e){
       var saved=null;try{saved=localStorage.getItem('theme');}catch(_){}
       if(saved)return;
       if(e.matches)root.setAttribute('data-theme','dark');else root.removeAttribute('data-theme');
-      [].forEach.call(document.querySelectorAll('.theme-toggle'),function(b){b.setAttribute('aria-pressed',e.matches?'true':'false');});
+      sync();
     });
   }catch(_){}
   [].forEach.call(document.querySelectorAll('.theme-toggle'),function(btn){
-    function sync(){btn.setAttribute('aria-pressed',root.getAttribute('data-theme')==='dark'?'true':'false');}
-    sync();
     btn.addEventListener('click',function(){
-      var dark=root.getAttribute('data-theme')==='dark';
-      if(dark)root.removeAttribute('data-theme');else root.setAttribute('data-theme','dark');
-      try{localStorage.setItem('theme',dark?'light':'dark');}catch(_){}
-      [].forEach.call(document.querySelectorAll('.theme-toggle'),function(b){b.setAttribute('aria-pressed',dark?'false':'true');});
+      var next=isDark()?'light':'dark';
+      function apply(){
+        if(next==='dark')root.setAttribute('data-theme','dark');else root.removeAttribute('data-theme');
+        try{localStorage.setItem('theme',next);}catch(_){}
+        sync();
+      }
+      if(document.startViewTransition && !reduceT){
+        var r=btn.getBoundingClientRect();
+        root.style.setProperty('--tx',(r.left+r.width/2)+'px'); root.style.setProperty('--ty',(r.top+r.height/2)+'px');
+        root.classList.add('theme-vt');
+        var t=document.startViewTransition(apply);
+        t.finished.then(function(){ root.classList.remove('theme-vt'); },function(){ root.classList.remove('theme-vt'); });
+      } else apply();
     });
   });
+  sync();
 })();
 
 /* Portrait made of particles (raw WebGL, no library). Falls back to the static drawing. */
@@ -1038,7 +1048,7 @@ function hoverIntent(el,fn){
       'float amp=(.005+.006*aR.x)*(.55+1.9*outer)*(1.+wd*3.5);'+
       'p+=vec2(sin(uTime*.7+q.y*3.+aR.y*3.),cos(uTime*.6+q.x*3.+aR.z*3.))*amp;'+
       'p+=wd*.03*vec2(sin(uTime*.25+aR.y*40.),cos(uTime*.2+aR.z*40.));'+
-      'vec2 dm=p-uMouse;float r=length(dm);float f=smoothstep(.75,0.,r);f=f*f*(3.-2.*f);p+=normalize(dm+vec2(1e-4))*f*(.04+.06*aR.y)*uPush;'+
+      'vec2 dm=p-uMouse;float r=length(dm);float f=smoothstep(.75,0.,r);f=f*f*(3.-2.*f);p+=normalize(dm+vec2(1e-4))*f*(.012+.018*aR.y)*uPush;'+
       'float tw=step(.6,aR.z);float ph=fract(uTime*(.07+.09*aR.y)+aR.x*7.);float fade=mix(1.,smoothstep(0.,.3,ph)*smoothstep(1.,.5,ph),tw);'+
       'vA=(.55+.45*aR.z)*(.85+.15*sin(uTime*.9+aR.x*6.28))*fade;'+
       'gl_Position=vec4(p.x,p.y*'+asp.toFixed(5)+',0.,1.);gl_PointSize=(1.5+aR.y*1.4)*uPR;}';
@@ -1065,6 +1075,7 @@ function hoverIntent(el,fn){
     fig.addEventListener('pointerleave',function(){ target=0; });
     var vis=true; if('IntersectionObserver' in window) new IntersectionObserver(function(es){ vis=es[0].isIntersecting; if(vis&&reduce) draw(0); }).observe(fig);
     matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){ setTimeout(color,50); });
+    document.addEventListener('themechange',color);
     new MutationObserver(function(){ setTimeout(color,50); }).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
     function draw(t){ gl.clear(gl.COLOR_BUFFER_BIT); gl.uniform1f(uTime,t); gl.uniform1f(uPush,push); gl.uniform2f(uMouse,mx,my); gl.drawArrays(gl.POINTS,0,n); }
     cv.classList.add('in');
