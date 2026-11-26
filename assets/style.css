@@ -1610,3 +1610,10 @@ html[data-theme="dark"] body:not([class*="theme-"]) .lg-fill{ fill:#fff; }
 .about-photo .ph-d{ display:none; }
 html[data-theme="dark"] body:not([class*="theme-"]) .about-photo .ph-l{ display:none; }
 html[data-theme="dark"] body:not([class*="theme-"]) .about-photo .ph-d{ display:block; }
+
+/* particle portrait */
+.about-photo canvas.pp{ position:absolute; left:0; top:0; width:100%; max-width:520px; aspect-ratio:1230/1279; height:auto; pointer-events:none; color:var(--volt); opacity:0; transition:opacity .9s ease; }
+.about-photo canvas.pp.in{ opacity:1; }
+.about-photo.pp-on img{ opacity:0; }
+html[data-theme="dark"] body:not([class*="theme-"]) .about-photo canvas.pp{ color:#F2F2F7; }
+.about-photo{ touch-action:pan-y; }

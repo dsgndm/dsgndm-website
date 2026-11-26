@@ -999,3 +999,79 @@ function hoverIntent(el,fn){
     });
   });
 })();
+
+/* Portrait made of particles (raw WebGL, no library). Falls back to the static drawing. */
+(function(){
+  var fig=document.querySelector('.about-photo'); if(!fig) return;
+  var ph=fig.querySelector('.ph-l'); if(!ph) return;
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cv=document.createElement('canvas'); cv.className='pp'; cv.setAttribute('aria-hidden','true');
+  var gl=null; try{ gl=cv.getContext('webgl',{alpha:true,premultipliedAlpha:false,antialias:false}); }catch(e){}
+  if(!gl) return;
+  var started=false;
+  function start(){
+    if(started) return; started=true;
+    var img=new Image(); img.decoding='async';
+    img.onload=function(){ build(img); };
+    img.src=ph.currentSrc||ph.src;
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){ if(es[0].isIntersecting){ start(); io.disconnect(); } },{rootMargin:'300px'});
+    io.observe(fig);
+  } else start();
+
+  function build(img){
+    var W=360,H=Math.round(W*img.naturalHeight/img.naturalWidth),asp=W/H;
+    var oc=document.createElement('canvas'); oc.width=W; oc.height=H; var cx=oc.getContext('2d'); cx.drawImage(img,0,0,W,H);
+    var d=cx.getImageData(0,0,W,H).data, pts=[];
+    for(var y=0;y<H;y++)for(var x=0;x<W;x++){ if(d[(y*W+x)*4+3]>60) pts.push(x,y); }
+    var max=innerWidth<700?9000:18000, total=pts.length/2, step=Math.max(1,total/max), n=Math.floor(total/step);
+    var data=new Float32Array(n*5);
+    for(var i=0;i<n;i++){
+      var k=Math.floor(i*step)*2, px=pts[k]+Math.random()-.5, py=pts[k+1]+Math.random()-.5;
+      var tx=px/W*2-1, ty=-(py/H*2-1)/asp, rad=Math.hypot(tx,ty*asp), o=Math.max(0,(rad-.62)/.38), jj=.035*o*o+.003;
+      tx+=(Math.random()+Math.random()-1)*jj*1.6; ty+=(Math.random()+Math.random()-1)*jj*1.6;
+      data[i*5]=tx; data[i*5+1]=ty; data[i*5+2]=Math.random(); data[i*5+3]=Math.random(); data[i*5+4]=Math.random();
+    }
+    var vs='attribute vec2 aT;attribute vec3 aR;uniform float uTime,uPush,uPR;uniform vec2 uMouse;varying float vA;'+
+      'void main(){vec2 q=aT;vec2 p=q;float rad=length(vec2(q.x,q.y*'+asp.toFixed(5)+'));float outer=smoothstep(.4,.95,rad);float wd=step(.8,aR.x);'+
+      'float amp=(.005+.006*aR.x)*(.55+1.9*outer)*(1.+wd*3.5);'+
+      'p+=vec2(sin(uTime*.7+q.y*3.+aR.y*3.),cos(uTime*.6+q.x*3.+aR.z*3.))*amp;'+
+      'p+=wd*.03*vec2(sin(uTime*.25+aR.y*40.),cos(uTime*.2+aR.z*40.));'+
+      'vec2 dm=p-uMouse;float r=length(dm);float f=smoothstep(.75,0.,r);f=f*f*(3.-2.*f);p+=normalize(dm+vec2(1e-4))*f*(.04+.06*aR.y)*uPush;'+
+      'float tw=step(.6,aR.z);float ph=fract(uTime*(.07+.09*aR.y)+aR.x*7.);float fade=mix(1.,smoothstep(0.,.3,ph)*smoothstep(1.,.5,ph),tw);'+
+      'vA=(.55+.45*aR.z)*(.85+.15*sin(uTime*.9+aR.x*6.28))*fade;'+
+      'gl_Position=vec4(p.x,p.y*'+asp.toFixed(5)+',0.,1.);gl_PointSize=(1.5+aR.y*1.4)*uPR;}';
+    var fs='precision mediump float;uniform vec3 uColor;varying float vA;void main(){float r=length(gl_PointCoord-.5);if(r>.5)discard;gl_FragColor=vec4(uColor,vA*smoothstep(.5,.2,r));}';
+    function sh(t,s){ var o=gl.createShader(t); gl.shaderSource(o,s); gl.compileShader(o); return gl.getShaderParameter(o,gl.COMPILE_STATUS)?o:null; }
+    var v=sh(gl.VERTEX_SHADER,vs), f=sh(gl.FRAGMENT_SHADER,fs); if(!v||!f) return;
+    var pr=gl.createProgram(); gl.attachShader(pr,v); gl.attachShader(pr,f); gl.linkProgram(pr); if(!gl.getProgramParameter(pr,gl.LINK_STATUS)) return;
+    gl.useProgram(pr);
+    var buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf); gl.bufferData(gl.ARRAY_BUFFER,data,gl.STATIC_DRAW);
+    var aT=gl.getAttribLocation(pr,'aT'), aR=gl.getAttribLocation(pr,'aR');
+    gl.enableVertexAttribArray(aT); gl.vertexAttribPointer(aT,2,gl.FLOAT,false,20,0);
+    gl.enableVertexAttribArray(aR); gl.vertexAttribPointer(aR,3,gl.FLOAT,false,20,8);
+    var uTime=gl.getUniformLocation(pr,'uTime'), uPush=gl.getUniformLocation(pr,'uPush'), uPR=gl.getUniformLocation(pr,'uPR'), uMouse=gl.getUniformLocation(pr,'uMouse'), uColor=gl.getUniformLocation(pr,'uColor');
+    gl.enable(gl.BLEND); gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA,gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
+    gl.clearColor(0,0,0,0);
+    function color(){ var m=(getComputedStyle(cv).color||'').match(/[\d.]+/g)||[30,51,255]; gl.uniform3f(uColor,m[0]/255,m[1]/255,m[2]/255); }
+    function size(){ var w=cv.clientWidth,h=cv.clientHeight,dpr=Math.min(window.devicePixelRatio||1,2); if(!w||!h) return; cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr); gl.viewport(0,0,cv.width,cv.height); gl.uniform1f(uPR,dpr*(w/520)); }
+    fig.insertBefore(cv,fig.firstChild); fig.classList.add('pp-on');
+    size(); color();
+    if('ResizeObserver' in window) new ResizeObserver(size).observe(cv);
+    var mx=9,my=9,tx0=9,ty0=9,push=0,target=0;
+    function move(ev){ var r=cv.getBoundingClientRect(); tx0=((ev.clientX-r.left)/r.width)*2-1; ty0=-(((ev.clientY-r.top)/r.height)*2-1)/asp; target=reduce?0:1; }
+    fig.addEventListener('pointermove',move); fig.addEventListener('pointerdown',move);
+    fig.addEventListener('pointerleave',function(){ target=0; });
+    var vis=true; if('IntersectionObserver' in window) new IntersectionObserver(function(es){ vis=es[0].isIntersecting; if(vis&&reduce) draw(0); }).observe(fig);
+    matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){ setTimeout(color,50); });
+    new MutationObserver(function(){ setTimeout(color,50); }).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+    function draw(t){ gl.clear(gl.COLOR_BUFFER_BIT); gl.uniform1f(uTime,t); gl.uniform1f(uPush,push); gl.uniform2f(uMouse,mx,my); gl.drawArrays(gl.POINTS,0,n); }
+    cv.classList.add('in');
+    if(reduce){ draw(0); return; }
+    (function loop(now){
+      requestAnimationFrame(loop); if(!vis||document.hidden) return;
+      mx+=(tx0-mx)*.06; my+=(ty0-my)*.06; push+=(target-push)*.03; draw(now/1000);
+    })(0);
+  }
+})();
