@@ -978,6 +978,16 @@ function hoverIntent(el,fn){
 /* Theme toggle */
 (function(){
   var root=document.documentElement;
+  /* follow the OS theme live, unless the visitor chose one with the button */
+  try{
+    var mq=matchMedia('(prefers-color-scheme: dark)');
+    mq.addEventListener('change',function(e){
+      var saved=null;try{saved=localStorage.getItem('theme');}catch(_){}
+      if(saved)return;
+      if(e.matches)root.setAttribute('data-theme','dark');else root.removeAttribute('data-theme');
+      [].forEach.call(document.querySelectorAll('.theme-toggle'),function(b){b.setAttribute('aria-pressed',e.matches?'true':'false');});
+    });
+  }catch(_){}
   [].forEach.call(document.querySelectorAll('.theme-toggle'),function(btn){
     function sync(){btn.setAttribute('aria-pressed',root.getAttribute('data-theme')==='dark'?'true':'false');}
     sync();
