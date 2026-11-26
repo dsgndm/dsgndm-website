@@ -1119,34 +1119,6 @@ function hoverIntent(el,fn){
   });
 })();
 
-/* Magnetic buttons: a subtle pull toward the pointer. Fine pointers only, off with reduced motion. */
-(function(){
-  if(!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var els=[].slice.call(document.querySelectorAll('.btn, .nav-cta, .who-btn, .vr .go, .theme-toggle, .rail-toggle'));
-  if(!els.length) return;
-  var st=els.map(function(el){ return {el:el,x:0,y:0,on:false}; });
-  var mx=-999,my=-999,raf=0;
-  els.forEach(function(el){ el.style.transition=(el.style.transition?el.style.transition+',':'')+'translate .6s cubic-bezier(.34,1.56,.64,1)'; });
-  function tick(){
-    raf=0;
-    st.forEach(function(s){
-      var r=s.el.getBoundingClientRect(); if(!r.width||r.bottom<0||r.top>innerHeight) return;
-      var cx=r.left+r.width/2-s.x, cy=r.top+r.height/2-s.y;
-      var pad=26, inside=mx>r.left-pad&&mx<r.right+pad&&my>r.top-pad&&my<r.bottom+pad;
-      if(inside){
-        var k=Math.min(10,Math.max(5,r.width*.12));
-        var tx=Math.max(-k,Math.min(k,(mx-cx)*.28)), ty=Math.max(-k,Math.min(k,(my-cy)*.28));
-        if(!s.on){ s.on=true; s.el.style.transitionDuration=''; }
-        s.x=tx; s.y=ty; s.el.style.translate=tx.toFixed(1)+'px '+ty.toFixed(1)+'px';
-      } else if(s.on){ s.on=false; s.x=0; s.y=0; s.el.style.translate='0 0'; }
-    });
-  }
-  document.addEventListener('pointermove',function(e){ if(e.pointerType!=='mouse') return; mx=e.clientX; my=e.clientY; if(!raf) raf=requestAnimationFrame(tick); },{passive:true});
-  document.addEventListener('pointerleave',function(){ mx=my=-999; if(!raf) raf=requestAnimationFrame(tick); });
-})();
-
-
 /* Copy email / phone after they are revealed */
 (function(){
   var es=(document.documentElement.lang||'').indexOf('es')===0;
