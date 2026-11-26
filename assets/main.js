@@ -941,19 +941,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 })();
 
-/* Selected work vertical accordion */
-(function(){
-  var vr=[].slice.call(document.querySelectorAll('.vl .vr'));
-  if(!vr.length)return;
-  function on(i){vr.forEach(function(e,k){e.classList.toggle('on',k==i);});}
-  vr.forEach(function(e,i){
-    hoverIntent(e,function(){on(i);});
-    e.addEventListener('focus',function(){on(i);});
-    
-  });
-})();
-
-
 /* Hover intent for accordions: opens only when the mouse really moves and rests ~45ms on the item,
    so layout shifts caused by the animation itself never trigger new openings. */
 function hoverIntent(el,fn){
@@ -965,3 +952,24 @@ function hoverIntent(el,fn){
   });
   el.addEventListener('pointerleave',function(){clearTimeout(t);});
 }
+
+/* Page transitions: remember where the click happened so the destination opens from that point */
+(function(){
+  function isCase(u){return /case-[a-z]+\.html$/.test(new URL(u,location.href).pathname);}
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href]');if(!a||!isCase(a.href))return;
+    var r=a.getBoundingClientRect(),x=e.clientX||r.left+r.width/2,y=e.clientY||r.top+r.height/2;
+    try{sessionStorage.setItem('vt',x+','+y);}catch(_){}
+  },true);
+  addEventListener('pagereveal',function(e){
+    if(!e.viewTransition||!window.navigation||!navigation.activation||!navigation.activation.from)return;
+    var from=navigation.activation.from.url,root=document.documentElement;
+    if(isCase(location.href)&&!isCase(from)){
+      var v=null;try{v=(sessionStorage.getItem('vt')||'').split(',');}catch(_){}
+      if(v&&v.length===2){root.style.setProperty('--vt-x',v[0]+'px');root.style.setProperty('--vt-y',v[1]+'px');}
+      e.viewTransition.finished.then(function(){root.style.removeProperty('--vt-x');root.style.removeProperty('--vt-y');},function(){});
+    }else{
+      root.classList.add('vt-back');e.viewTransition.finished.then(function(){root.classList.remove('vt-back');},function(){root.classList.remove('vt-back');});
+    }
+  });
+})();
