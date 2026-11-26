@@ -1175,3 +1175,21 @@ function hoverIntent(el,fn){
   var see=new IntersectionObserver(function(es){ es.forEach(function(e){ var v=e.target; if(reduceV) return; if(e.isIntersecting){ var p=v.play(); if(p&&p.catch) p.catch(function(){}); } else v.pause(); }); },{threshold:.35});
   vids.forEach(function(v){ near.observe(v); see.observe(v); });
 })();
+
+/* Case pages: chapter index */
+(function(){
+  if(!document.body.className.match(/theme-(whizzle|ayucell)/)) return;
+  var heads=[].slice.call(document.querySelectorAll('.case-section .sticky-label .eyebrow, .flag-step h2'));
+  if(heads.length<4) return;
+  var nav=document.createElement('nav'); nav.className='chapters'; nav.setAttribute('aria-label',document.documentElement.lang==='es'?'Capítulos':'Chapters');
+  var items=[];
+  heads.forEach(function(h,i){
+    var sec=h.closest('section'); if(!sec) return;
+    if(!sec.id) sec.id='ch-'+i;
+    var a=document.createElement('a'); a.href='#'+sec.id; a.innerHTML='<span></span><i></i>'; a.firstChild.textContent=h.textContent.trim();
+    nav.appendChild(a); items.push({a:a,sec:sec});
+  });
+  document.body.appendChild(nav);
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ items.forEach(function(it){ it.a.classList.toggle('on',it.sec===e.target); }); } }); },{rootMargin:'-45% 0px -50% 0px'});
+  items.forEach(function(it){ io.observe(it.sec); });
+})();

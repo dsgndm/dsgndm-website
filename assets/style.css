@@ -1724,3 +1724,31 @@ html[data-theme="dark"] body:not([class*="theme-"]) .vr.on .go{ background:var(-
 .case-video{ margin:clamp(24px,3vw,40px) 0 0; border-radius:var(--r-card); overflow:hidden; border:1px solid var(--line); background:var(--card); }
 .case-video video{ display:block; width:100%; height:auto; background:var(--paper-alt, var(--card)); }
 .case-video figcaption{ padding:12px 16px; font:400 12px/1.5 var(--font-mono); color:var(--muted); border-top:1px solid var(--line); }
+
+/* ===== Case pages: cover video, scroll reveal + parallax, chapter index, Ayucell colour ===== */
+.case-cover.cover-video{ border:0; margin:0 auto; border-radius:var(--r-card); }
+.case-cover.cover-video video{ width:100%; height:100%; object-fit:cover; }
+@supports (animation-timeline: view()){
+  @keyframes fig-reveal{ from{ clip-path:inset(7% 5% 7% 5% round 22px); } to{ clip-path:inset(0 0 0 0 round 0px); } }
+  @keyframes fig-par{ from{ transform:scale(1.14) translateY(-4%); } to{ transform:scale(1.03) translateY(3%); } }
+  @media (prefers-reduced-motion: no-preference){
+    .flag-fig-media{ animation:fig-reveal linear both; animation-timeline:view(); animation-range:entry 0% cover 38%; }
+    .flag-fig-media img{ animation:fig-par linear both; animation-timeline:view(); animation-range:entry 0% exit 100%; }
+  }
+}
+.chapters{ position:fixed; right:clamp(14px,1.6vw,26px); top:50%; transform:translateY(-50%); z-index:60; display:none; flex-direction:column; align-items:flex-end; gap:4px; }
+@media (min-width:1180px){ .chapters{ display:flex; } }
+.chapters a{ display:flex; align-items:center; gap:10px; padding:5px 0; color:var(--muted); text-decoration:none; font:500 11px/1 var(--font-mono); text-transform:uppercase; letter-spacing:.06em; }
+.chapters a span{ opacity:0; transform:translateX(6px); transition:opacity .25s, transform .25s; background:var(--paper); color:var(--ink); padding:5px 8px; border-radius:6px; border:1px solid var(--line); white-space:nowrap; }
+.chapters a i{ display:block; width:14px; height:2px; background:currentColor; opacity:.45; transition:width .3s var(--ease), opacity .3s; }
+.chapters a:hover span, .chapters a:focus-visible span, .chapters a.on span{ opacity:1; transform:none; }
+.chapters a.on{ color:var(--ink); } .chapters a.on i{ width:30px; opacity:1; }
+/* Ayucell: its own palette (white coffee, jet stream, teal, tan) */
+.theme-ayucell{ --paper:#F6F3EE; --paper-alt:#E5EEEC; --card:#FFFFFF; --line:#D5DDD9; --line-soft:#E4E9E5; --muted:#56606A; --volt:#2B7A78; --volt-10:rgba(43,122,120,.10); --volt-20:rgba(43,122,120,.18); --on-volt:#FFFFFF; }
+.theme-ayucell .case-hero{ background:linear-gradient(180deg,#E5EEEC 0%,var(--paper) 100%); }
+.theme-ayucell .eyebrow{ color:var(--volt); }
+.theme-ayucell .flag-fig-media{ background:#CBE0DC; }
+.theme-ayucell .flag-band p{ color:#2B7A78; }
+.theme-ayucell .result-card{ background:#1F5F5D; color:#fff; } .theme-ayucell .result-card span{ color:rgba(255,255,255,.92); }
+.theme-ayucell .result-card:nth-child(2){ background:#26706E; } .theme-ayucell .result-card:nth-child(3){ background:#6E5F34; }
+.theme-ayucell .results-grid{ gap:0; }
